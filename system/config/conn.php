@@ -7,10 +7,10 @@ $host = 'localhost';
 $user = 'root'; 
 //jika menggunakan PC sendiri sebagai host,
 //secara default password dikosongkan
-$pass = '';
+$pass = 'iadhisti20';
 //isikan nama database sesuai database
 //yang dibuat pada langkah-1
-$dbname = 'mariabsen';
+$dbname = 'absensi_siswaa';
 //mengubung ke host
 $connect = mysql_connect($host, $user, $pass) OR DIE(mysql_error());
 //memilih database yang akan digunakan
