@@ -12,6 +12,7 @@
     transform: scale(1);
   }
 }
+
 @keyframes hideSweetAlert {
   0% {
     transform: scale(1);
@@ -20,6 +21,7 @@
     transform: scale(0.5);
   }
 }
+
 @keyframes slideFromTop {
   0% {
     top: 0%;
@@ -28,6 +30,7 @@
     top: 50%;
   }
 }
+
 @keyframes slideToTop {
   0% {
     top: 50%;
@@ -36,6 +39,7 @@
     top: 0%;
   }
 }
+
 @keyframes slideFromBottom {
   0% {
     top: 70%;
@@ -44,6 +48,7 @@
     top: 50%;
   }
 }
+
 @keyframes slideToBottom {
   0% {
     top: 50%;
@@ -76,6 +81,7 @@
 .hideSweetAlert[data-animation=slide-from-bottom] {
   animation: slideToBottom 0.3s;
 }
+
 @keyframes animateSuccessTip {
   0% {
     width: 0;
@@ -103,6 +109,7 @@
     top: 45px;
   }
 }
+
 @keyframes animateSuccessLong {
   0% {
     width: 0;
@@ -125,6 +132,7 @@
     top: 38px;
   }
 }
+
 @keyframes rotatePlaceholder {
   0% {
     transform: rotate(-45deg);
@@ -148,6 +156,7 @@
 .sa-icon.sa-success.animate::after {
   animation: rotatePlaceholder 4.25s ease-in;
 }
+
 @keyframes animateErrorIcon {
   0% {
     transform: rotateX(100deg);
@@ -161,6 +170,7 @@
 .animateErrorIcon {
   animation: animateErrorIcon 0.5s;
 }
+
 @keyframes animateXMark {
   0% {
     transform: scale(0.4);
@@ -185,6 +195,7 @@
 .animateXMark {
   animation: animateXMark 0.5s;
 }
+
 @keyframes pulseWarning {
   0% {
     border-color: #F8D486;
@@ -196,6 +207,7 @@
 .pulseWarning {
   animation: pulseWarning 0.75s infinite alternate;
 }
+
 @keyframes pulseWarningIns {
   0% {
     background-color: #F8D486;
@@ -207,6 +219,7 @@
 .pulseWarningIns {
   animation: pulseWarningIns 0.75s infinite alternate;
 }
+
 @keyframes rotate-loading {
   0% {
     transform: rotate(0deg);
@@ -244,6 +257,7 @@ body.stop-scrolling {
   display: none;
   z-index: 2000;
 }
+
 @media all and (max-width: 767px) {
   .sweet-alert {
     width: auto;
@@ -561,9 +575,11 @@ body.stop-scrolling {
   height: 30px;
   margin: 12px;
 }
+
 /*
  * Animation
  */
+
 @-webkit-keyframes ball-fall {
   0% {
     opacity: 0;
@@ -592,6 +608,7 @@ body.stop-scrolling {
     transform: translateY(145%);
   }
 }
+
 @-moz-keyframes ball-fall {
   0% {
     opacity: 0;
@@ -620,6 +637,7 @@ body.stop-scrolling {
     transform: translateY(145%);
   }
 }
+
 @-o-keyframes ball-fall {
   0% {
     opacity: 0;
@@ -648,6 +666,7 @@ body.stop-scrolling {
     transform: translateY(145%);
   }
 }
+
 @keyframes ball-fall {
   0% {
     opacity: 0;
