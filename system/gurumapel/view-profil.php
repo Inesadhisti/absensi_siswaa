@@ -6,15 +6,17 @@ include('system/config/conn.php');
 //panggil file header.php untuk menghubungkan konten bagian atas
 include('system/inc/header.php');
 //memberi judul halaman
-echo '<title>Profil - MARI-ABSEN</title>';
+<?= '<title>Profil - MARI-ABSEN</title>' >?;
 //panggil file css.php untuk desain atau tema
 include('system/inc/css.php');
 //panggil file navi-gurumapel.php untuk menghubungkan gurumapel ke konten
 include('system/inc/nav-gurumapel.php');
 //mendapatkan informasi untuk menlihat data
-$id_user = $_GET['id'];
-$query = mysql_query("select * from user where id_user='$id_user'") or die(mysql_error());
-$data = mysql_fetch_array($query);
+FILTER_INPUT(INPUT_GET, 'id');
+$this->db->from('user');
+$this->db->where('$id_user');
+$query->db->get();
+$data = $query->result_array();
 ?>
 
 	<div class="page-content">
@@ -39,13 +41,13 @@ $data = mysql_fetch_array($query);
 										<tr>
 										<td align="right">Nama</td>
 										<td align="center">:</td>
-										<td align="left"><?php echo $data['nama']; ?></td>
+										<td align="left"><?php <?= $data['nama']?>; ?></td>
 										</tr> 
 										
 										<tr>
 										<td align="right">Username</td>
 										<td align="center">:</td>
-										<td align="left"><?php echo $data['user']; ?></td>
+										<td align="left"><?php <?= $data['user'] >?; ?></td>
 										</tr> 
 										
 										<tr>
@@ -57,7 +59,7 @@ $data = mysql_fetch_array($query);
 										<tr>
 										<td align="right">Level</td>
 										<td align="center">:</td>
-										<td align="left"><?php echo $data['level']; ?></td>
+										<td align="left"><?php <?= $data['level'] >?; ?></td>
 										</tr> 
 									</tbody>
 								</table>
@@ -69,7 +71,7 @@ $data = mysql_fetch_array($query);
 						<div class="col-md-12">
 							<div class="form-group" align="center">
 								<div class="btn-group" role="group">
-									<a href="page.php?g-edit-profil&id=<?php echo $data['id_user'];?>" class="btn btn-default font-icon font-icon-pencil" data-toggle="tooltip" data-placement="top" title="Edit?"></a>
+									<a href="page.php?g-edit-profil&id= <?= $data['id_user'] >?;?>" class="btn btn-default font-icon font-icon-pencil" data-toggle="tooltip" data-placement="top" title="Edit?"></a>
 									<a href="javascript:history.back()" class="btn btn-default font-icon font-icon-refresh-2" data-toggle="tooltip" data-placement="top" title="Kembali?"></a>
 								</div>
 							</div>

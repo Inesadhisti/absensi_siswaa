@@ -6,7 +6,7 @@ include('../system/config/conn.php');
 //panggil file header.php untuk menghubungkan konten bagian atas
 include('../system/inc/header.php');
 //memberi judul halaman
-	echo '<title>Pencarian Data Kelas - MARI-ABSEN</title>';
+	<?= '<title>Pencarian Data Kelas - MARI-ABSEN</title>' >?;
 //panggil file css.php untuk desain atau tema
 include('inc/css.php');
 //panggil file navi-admin.php untuk menghubungkan navigasi admin ke konten
@@ -52,19 +52,25 @@ include('inc/nav-walikelas.php');
 							<tbody>
 								<?php
 								//membentuk klausa where pencarian 
-								if(isset($_GET['q']) && $_GET['q']){
-								$q = $_GET['q']; 
-								$sql = "SELECT * FROM kelas WHERE nm_kelas like '%$q%' limit 10";
-								$result = mysql_query($sql);
-								if(mysql_num_rows($result) > 0) {
-								while($data = mysql_fetch_array($result))
+								if(isset(FILTER_INPUT(INPUT_GET, 'q')) && FILTER_INPUT(INPUT_GET, 'q')){
+								FILTER_INPUT(INPUT_GET, 'q'); 
+									
+								$this->db->from('kelas');
+								$this->db->like('nm_kelas', '%$q%');
+								$this->db->limit(10);
+								$sql= $this->db->get();
+								$result = sql-> result_array();
+								 
+								if($result->result_array() > 0) {
+								while($data = $resutl->result_array())
 								{
  								?>
+								
 								<tr>
-								<td><center><?php echo $data['nm_kelas']; ?></center></td>
+								<td><center><?php <?= $data['nm_kelas'] >?; ?></center></td>
 								<td align="center">
 								<div class="btn-group btn-group-sm" role="group" aria-label="Basic example">
-									<a href="../page.php?w-detail-kelas&id=<?php echo $data['id_kelas'];?>" class="btn btn btn-default" data-toggle="tooltip" data-placement="top" title="Detail?"><i class="font-icon font-icon-eye"></i> </a>
+									<a href="../page.php?w-detail-kelas&id=<?php <?= $data['id_kelas'] >? ;?>" class="btn btn btn-default" data-toggle="tooltip" data-placement="top" title="Detail?"><i class="font-icon font-icon-eye"></i> </a>
 								</div>
 								</td>
 								</tr>
@@ -72,7 +78,7 @@ include('inc/nav-walikelas.php');
 								} 
 								?>
 							</tbody>
-							<?php }else{ echo '<tr><td  colspan="7" align="center">Nama Kelas tidak ditemukan!</td></tr>'; } } ?>
+							<?php }else{ <?= '<tr><td  colspan="7" align="center">Nama Kelas tidak ditemukan!</td></tr>' >?; } } ?>
 						</table>
 					</div>
 				</div><!--.box-typical-body-->
@@ -81,7 +87,7 @@ include('inc/nav-walikelas.php');
 					<div class="col-md-6">
 						<br>
   						<span class="label label-success">Info! </span> Hasil  Pencarian
-  						<span class="label label-primary">Untuk : <?php echo $q; ?> </span>
+  						<span class="label label-primary">Untuk : <?php <?= $q >?; ?> </span>
 					</div>
 					
 					<div class="col-md-6" align="right">

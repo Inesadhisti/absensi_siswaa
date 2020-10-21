@@ -6,7 +6,7 @@ include('system/config/conn.php');
 //panggil file header.php untuk menghubungkan konten bagian atas
 include('system/inc/header.php');
 //memberi judul halaman
-echo '<title>gurumapel - MARI-ABSEN</title>';
+<?= '<title>gurumapel - MARI-ABSEN</title>' >?;
 //panggil file css.php untuk desain atau tema
 include('system/inc/css.php');
 //panggil file navi-gurumapel.php untuk menghubungkan gurumapel  ke konten
@@ -23,21 +23,21 @@ $bln = array ("","Januari","Februari","Maret","April","Mei","Juni","Juli","Agust
 				<div class="col-lg-12 col-md-12">
 				<?php 
                 //kode php ini kita gunakan untuk menampilkan pesan Selamat datang user!
-				if (!empty($_GET['sign-in']) && $_GET['sign-in'] == 'succes') {
-				echo '<div class="alert alert-success alert-fill alert-close alert-dismissible fade in" role="alert">
+				if (!empty(FILTER_INPUT(INPUT_GET, 'sign-in')) && FILTER_INPUT(INPUT_GET, 'sign-in') == 'succes') {
+				<?= '<div class="alert alert-success alert-fill alert-close alert-dismissible fade in" role="alert"> >?
 			  	<button type="button" class="close" data-dismiss="alert" aria-label="Close">
 			  	<span aria-hidden="true">&times;</span>
 			  	</button>
-			  	Assalamualaikum <strong>'.$_SESSION['nama'].' ! </strong>
+			  	Assalamualaikum <strong>'.(FILTER_INPUT(INPUT_SESSION, 'nama').' ! </strong>
 				Selamat Datang Di MARI-ABSEN </div>';
 				}
 				//kode php ini kita gunakan untuk menampilkan pesan Edit sukses
-				else if (!empty($_GET['message']) && $_GET['message'] == 'edit-success') {
-				echo '<div class="alert alert-success alert-fill alert-close alert-dismissible fade in" role="alert">
+				else if (!empty(FILTER_INPUT(INPUT_GET, 'message')) && FILTER_INPUT(INPUT_GET, 'message') == 'edit-success') {
+				<?= '<div class="alert alert-success alert-fill alert-close alert-dismissible fade in" role="alert"> >?
 			  	<button type="button" class="close" data-dismiss="alert" aria-label="Close">
 			  	<span aria-hidden="true">&times;</span>
 			 	</button>
-			  	SUCCESS !! - Data Profil Berhasil Di Edit ! [ <a href="page.php?g-detail-profil&id='.$_SESSION['id_user'].'">Lihat Perubahan Disini !</a> ]
+			  	SUCCESS !! - Data Profil Berhasil Di Edit ! [ <a href="page.php?g-detail-profil&id='.FILTER_INPUT(INPUT_SESSION, 'id_user').'">Lihat Perubahan Disini !</a> ]
 				</div>';
 				}
 				?>
@@ -84,21 +84,28 @@ $bln = array ("","Januari","Februari","Maret","April","Mei","Juni","Juli","Agust
 					</thead>
 					<tbody>
 						<?php 
-						$kelas=mysql_query("select * from kelas order by nm_kelas asc",$connect);
-						while($row=mysql_fetch_array($kelas)){
+						$this->db->from('kelas');
+						$this->db->order_by('nm_kelas', 'asc');
+						$query->db->get();
+						
+						while($row= $kelas->result_array()){
 						//mencari jumlah siswa di masing-masing kelas
-						$siswa=mysql_query("select * from siswa where nm_kelas='$row[nm_kelas]'",$connect);
-						$jumlah=mysql_num_rows($siswa);
+						$this->db->from('siswa');
+						$this->db->where('$row[nm_kelas');
+						$query->db->get();
+						
+						$jumlah= $siswa->result_array();
+						
 						?>
 						<tr>
 						
-						<td align="center"><?php echo $row['nm_kelas']; ?></td>
-						<td align="center"><?php echo "".$hari[date("w")].", ".date("j")." ".$bln[date("n")]." ".date("Y");""; ?></td>
-						<td align="center"><?php echo $jumlah;?></td>
+						<td align="center"><?php <?= $row['nm_kelas'] >?; ?></td>
+						<td align="center"><?php <?= "".$hari[date("w")].", ".date("j")." ".$bln[date("n")]." ".date("Y");"" >?; ?></td>
+						<td align="center"><?php <?= $jumlah >?;?></td>
 						<td align="center">
 							<div class="btn-group btn-group-sm" role="group" aria-label="Basic example">
-							<a href="page.php?absen-siswa&kelas=<?php echo $row['nm_kelas'];?>" class="btn btn-default font-icon font-icon-event" data-toggle="tooltip" data-placement="top" title="Absen?"></a>
-							<a href="page.php?g-data-siswa&kelas=<?php echo $row['nm_kelas'];?>" class="btn btn-default font-icon font-icon-eye" data-toggle="tooltip" data-placement="top" title="Detail?"></a>
+							<a href="page.php?absen-siswa&kelas=<?php <?= $row['nm_kelas'] >?;?>" class="btn btn-default font-icon font-icon-event" data-toggle="tooltip" data-placement="top" title="Absen?"></a>
+							<a href="page.php?g-data-siswa&kelas=<?php <?= $row['nm_kelas'] >?;?>" class="btn btn-default font-icon font-icon-eye" data-toggle="tooltip" data-placement="top" title="Detail?"></a>
 							</div>
 						</td>
 						</tr>
@@ -115,15 +122,21 @@ $bln = array ("","Januari","Februari","Maret","April","Mei","Juni","Juli","Agust
 						<br>
   						<span class="label label-success">Info! </span> Total
 						<?php 
-						$query=mysql_query("select * from kelas order by nm_kelas");
-          				$jmlh_kelas=mysql_num_rows($query);
+						$this->db->from('kelas');
+						$this->db->order_by('nm_kelas');
+						$query->db->get();
+						($jmlh_kelas= $query->result_array();
+	 					
+						?>
+  						<span class="label label-primary">Kelas : <?php <?= "$jmlh_kelas" >?;?> </span>
+						<?php
+						$this->db->from('siswa');
+						$this->db->order_by('id_siswa');
+						$query->db->get();
+						
+						($jmlh_siswa= $query->result_array();
     					?>
-  						<span class="label label-primary">Kelas : <?php echo "$jmlh_kelas";?> </span>
-						<?php 
-						$query=mysql_query("select * from siswa order by id_siswa");
-          				$jmlh_siswa=mysql_num_rows($query);
-    					?>
-						<span class="label label-primary">Siswa : <?php echo "$jmlh_siswa";?> </span>
+						<span class="label label-primary">Siswa : <?php <?= "$jmlh_siswa" >?;?> </span>
 					</div>
 					
 					<div class="col-md-6" align="right">

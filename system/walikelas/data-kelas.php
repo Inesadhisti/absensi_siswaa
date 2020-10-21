@@ -6,7 +6,7 @@ include('system/config/conn.php');
 //panggil file header.php untuk menghubungkan konten bagian atas
 include('system/inc/header.php');
 //memberi judul halaman
-echo '<title>Data Semua Kelas - MARI-ABSEN</title>';
+<?= '<title>Data Semua Kelas - MARI-ABSEN</title>' >?;
 //panggil file css.php untuk desain atau tema
 include('system/inc/css.php');
 //panggil file navi-walikelas.php untuk menghubungkan navigasi walikelas ke konten
@@ -19,22 +19,22 @@ include('system/inc/nav-walikelas.php');
 				<div class="col-lg-12 col-md-12">
 				<?php 
 				//kode php ini kita gunakan untuk menampilkan pesan tambah data sukses
-				if (!empty($_GET['message']) && $_GET['message'] == 'insert-success') {
-				echo '<div class="alert alert-success alert-fill alert-close alert-dismissible fade in" role="alert">
+				if (!empty(FILTER_INPUT(INPUT_GET, 'message')) && FILTER_INPUT(INPUT_GET, 'message') == 'insert-success') {
+				<?= '<div class="alert alert-success alert-fill alert-close alert-dismissible fade in" role="alert"> >?
 				<button type="button" class="close" data-dismiss="alert" aria-label="Close">
 				<span aria-hidden="true">&times;</span>
 				</button> SUCCESS !! - Data Kelas Berhasil Di Tambah ! </div>';
 				} 
 				//kode php ini kita gunakan untuk menampilkan pesan edit data sukses
-				else if (!empty($_GET['message']) && $_GET['message'] == 'edit-success') {
-				echo '<div class="alert alert-success alert-fill alert-close alert-dismissible fade in" role="alert">
+				else if (!empty(FILTER_INPUT(INPUT_GET, 'message')) && FILTER_INPUT(INPUT_GET, 'message') == 'edit-success') {
+				<?= '<div class="alert alert-success alert-fill alert-close alert-dismissible fade in" role="alert"> >?
 				<button type="button" class="close" data-dismiss="alert" aria-label="Close">
 				<span aria-hidden="true">&times;</span>
 				</button> SUCCESS !! - Data Kelas Berhasil Di Edit ! </div>';
 				} 
 				//kode php ini kita gunakan untuk menampilkan pesan tambah data sukses
-				else if (!empty($_GET['message']) && $_GET['message'] == 'delete-success') {
-				echo '<div class="alert alert-success alert-fill alert-close alert-dismissible fade in" role="alert">
+				else if (!empty(FILTER_INPUT(INPUT_GET, 'message')) && FILTER_INPUT(INPUT_GET, 'message') == 'delete-success') {
+				<?= '<div class="alert alert-success alert-fill alert-close alert-dismissible fade in" role="alert"> >?
 				<button type="button" class="close" data-dismiss="alert" aria-label="Close">
 				<span aria-hidden="true">&times;</span>
 				</button> SUCCESS !! - Data Kelas Berhasil Di Hapus ! </div>';
@@ -80,22 +80,26 @@ include('system/inc/nav-walikelas.php');
 							<tbody>
 								<?php
 								$batas = 10;
-								$pg = isset($_GET['pg']) ? $_GET['pg']:"";
+								$pg = isset(FILTER_INPUT(INPUT_GET, 'pg') ? FILTER_INPUT(INPUT_GET, 'pg'):"";
 								if (empty($pg)) {
 								$posisi = 0;
 								$pg = 1;
 								} else {
 								$posisi = ($pg-1)*$batas; }
-								$sql = mysql_query("SELECT * FROM kelas ORDER BY nm_kelas ASC limit $posisi, $batas ");
+								$this->db->from('kelas');
+								$this->db->order_by('nm_kelas', 'asc');
+								$this->db->limit('$posisi', '$batas');
+								$query->db->get();
+								
 								$no = 1+$posisi;
-								while ($data = mysql_fetch_assoc($sql)) 
+								while ($data = $sql->result_array()) 
 								{
 								?>
 								<tr>
-								<td><center><?php echo $data['nm_kelas']; ?></center></td>
+								<td><center><?php <?= $data['nm_kelas'] >?; ?></center></td>
 								<td align="center">
 								<div class="btn-group btn-group-sm" role="group" aria-label="Basic example">
-									<a href="page.php?w-detail-kelas&id=<?php echo $data['id_kelas'];?>" class="btn btn-default font-icon font-icon-eye" data-toggle="tooltip" data-placement="top" title="Detail?"></a>
+									<a href="page.php?w-detail-kelas&id=<?php <?= $data['id_kelas'] >?;?>" class="btn btn-default font-icon font-icon-eye" data-toggle="tooltip" data-placement="top" title="Detail?"></a>
 								</div>
 								</td>
 								</tr>
@@ -110,14 +114,15 @@ include('system/inc/nav-walikelas.php');
 					<div class="col-md-6">
 						<?php
 						//hitung jumlah data
+							
 						$jml_data = mysql_num_rows(mysql_query("SELECT * FROM kelas"));
 						//Jumlah halaman
 						$JmlHalaman = ceil($jml_data/$batas); //ceil digunakan untuk pembulatan keatas
 						?>
 						<br>
   						<span class="label label-success">Info! </span> Total  
-						<span class="label label-primary">Kelas : <?php echo $jml_data; ?> </span>
-  						<span class="label label-primary">Halaman : <?php echo $JmlHalaman; ?> </span>
+						<span class="label label-primary">Kelas : <?php <?= $jml_data >?; ?> </span>
+  						<span class="label label-primary">Halaman : <?php <?= $JmlHalaman >?; ?> </span>
 					</div>
 					
 				</div><!--.card-block-->

@@ -7,25 +7,39 @@ $folder="system/images/";
 
 //tangkap data dari form
 
-$pass = $_POST['pass'];
+FILTER_INPUT(INPUT_POST, 'pass');
 $pass = md5($pass);
-$confirm = $_POST['confirm'];
+FILTER_INPUT(INPUT_POST, 'confirm');
 $confirm = md5($confirm);
-$nama = $_POST['nama'];
-$user = $_POST['user'];
-$level = $_POST['level'];
+FILTER_INPUT(INPUT_POST, 'nama');
+FILTER_INPUT(INPUT_POST, 'user');
+FILTER_INPUT(INPUT_POST, 'level');
 
 //menghindari duplikat username
-$cek="SELECT user FROM user WHERE user='$user'";
-$ada=mysql_query($cek) or die (mysql_error());
-if(mysql_num_rows($ada)>0)
+$cek = 	$this->db->select('user');
+$this->db->where('$user');
+$query->db->get('user);
+$no = $cek->result_array();
+
+$ada= $cek->result_array();
+if($ada->result_array()>0)
 {
-	echo "<script>alert ('Username Telah Terdaftar ! Silahkan Periksa Kembali !');window.location='page.php?tambah-user' </script> ";
+	<?= "<script>alert ('Username Telah Terdaftar ! Silahkan Periksa Kembali !');window.location='page.php?tambah-user' </script> " >?;
 	}
 
 else {
-	$query = mysql_query ("insert into user values('','$user','$pass','$confirm','$level','$nama','$foto')")
-			or die (mysql_error());
+
+$data = array(
+        ' ' => ' ',
+        'user' => '$user',
+        'pass' => '$pass',
+	'confirm => '$confirm',
+	'level' => '$level',
+        'nama' => '$nama',
+	'confotofirm => '$foto'
+);
+$this->db->insert('user', $data);
+
 	header('location:page.php?data-user&message=insert-success');
 	} 
 ?>

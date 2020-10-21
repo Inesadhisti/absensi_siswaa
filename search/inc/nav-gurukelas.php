@@ -22,7 +22,7 @@
 	           				<img src="assets/img/gurumapel.png" alt"">
 	                        </button>
 	                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dd-user-menu">
-	                            <a class="dropdown-item" href="../page.php?g-detail-profil&id=<?php echo $_SESSION[id_user];?>"><span class="font-icon glyphicon glyphicon-user"></span>Profil</a>
+	                            <a class="dropdown-item" href="../page.php?g-detail-profil&id=<?php <?= (FILTER_INPUT(INPUT_SESSION, 'id_user'));?>"><span class="font-icon glyphicon glyphicon-user"></span>Profil</a>
 								<div class="dropdown-divider"></div>
 	                            <a class="dropdown-item" href="../page.php?keluar" onClick="return confirm('Yakin anda akan keluar?');"><span class="font-icon glyphicon glyphicon-log-out"></span>Keluar</a>
 	                        </div>
@@ -46,7 +46,7 @@
 		
 	    <ul class="side-menu-list">
 	        <li class="green">
-	            <a href="../page.php?g-detail-profil&id=<?php echo $_SESSION[id_user];?>">
+	            <a href="../page.php?g-detail-profil&id=<?php <?= (FILTER_INPUT(INPUT_SESSION, 'id_user'));?>">
 	            <i class="font-icon font-icon-user"></i>
 	            <span class="lbl">Profil</span>
 	            </a>
@@ -60,11 +60,15 @@
 	            <ul>
 	            <li>
 				<?php 
-				$query=mysql_query("SELECT * FROM kelas ORDER BY nm_kelas ASC",$connect);
-				while($row=mysql_fetch_array($query))
+			    	$this->db->from('kelas');
+			    	$this->db->order_by('nm_kelas', 'asc');
+			    	$query= $this->db->get();
+			    	    
+				while($row = $query->result_array())
+			    
 				{
 				?>
-				<a href="../page.php?absen-siswa&kelas=<?php  echo $row['nm_kelas']; ?>"> <span class="lbl"> Kelas <?php  echo $row['nm_kelas']; ?></span></a>
+				<a href="../page.php?absen-siswa&kelas=<?php  <?= $row['nm_kelas'] >?; ?>"> <span class="lbl"> Kelas <?php  <?= $row['nm_kelas'] >?; ?></span></a>
 				<?php
 				}
 				?>
@@ -80,11 +84,13 @@
 	            <ul>
 	            <li>
 				<?php 
-				$query=mysql_query("SELECT * FROM kelas ORDER BY nm_kelas ASC",$connect);
-				while($row=mysql_fetch_array($query))
+				$this->db->from('kelas');
+			    	$this->db->order_by('nm_kelas', 'asc');
+			    	$query= $this->db->get();
+				while($row = $query->result_array())
 				{
 				?>
-				<a href="../page.php?absen-siswa&kelas=<?php  echo $row['nm_kelas']; ?>"> <span class="lbl"> Kelas <?php  echo $row['nm_kelas']; ?></span></a>
+				<a href="../page.php?absen-siswa&kelas=<?php  <?= $row['nm_kelas'] >?; ?>"> <span class="lbl"> Kelas <?php  <?= $row['nm_kelas'] >?; ?></span></a>
 				<?php
 				}
 				?>
@@ -100,11 +106,13 @@
 	            <ul>
 	            <li>
 				<?php 
-				$query=mysql_query("SELECT * FROM kelas ORDER BY nm_kelas ASC",$connect);
-				while($row=mysql_fetch_array($query))
+				$this->db->from('kelas');
+			    	$this->db->order_by('nm_kelas', 'asc');
+			    	$query= $this->db->get();
+				while($row = $query->result_array())
 				{
 				?>
-				<a href="../page.php?data-absensi&kelas=<?php  echo $row['nm_kelas']; ?>&tanggal=<?php echo $tanggal=date("d/m/Y"); ?>"> <span class="lbl"> Kelas <?php  echo $row['nm_kelas']; ?></span></a>
+				<a href="../page.php?data-absensi&kelas=<?php  <?= $row['nm_kelas'] >?; ?>&tanggal=<?php <?= $tanggal=date("d/m/Y") >?; ?>"> <span class="lbl"> Kelas <?php  <?= $row['nm_kelas'] >?; ?></span></a>
 				<?php
 				}
 				?>
@@ -120,11 +128,13 @@
 	            <ul>
 				<li>
 				<?php 
-				$query=mysql_query("SELECT * FROM kelas ORDER BY nm_kelas ASC",$connect);
-				while($row=mysql_fetch_array($query))
+				$this->db->from('kelas');
+			    	$this->db->order_by('nm_kelas', 'asc');
+			    	$query= $this->db->get();
+				while($row = $query->result_array())
 				{
 				?>
-				<a href="../page.php?g-data-siswa&kelas=<?php  echo $row['nm_kelas']; ?>"> <span class="lbl"> Kelas <?php  echo $row['nm_kelas']; ?></span></a>
+				<a href="../page.php?g-data-siswa&kelas=<?php  <?= $row['nm_kelas'] >?; ?>"> <span class="lbl"> Kelas <?php  <?= $row['nm_kelas']>?; ?></span></a>
 				<?php
 				}
 				?>

@@ -6,15 +6,16 @@ include('system/config/conn.php');
 //panggil file header.php untuk menghubungkan konten bagian atas
 include('system/inc/header.php');
 //memberi judul halaman
-echo '<title>Data Absensi - MARI-ABSEN</title>';
+<?= '<title>Data Absensi - MARI-ABSEN</title>' >?;
 //panggil file css.php untuk desain atau tema
 include('system/inc/css.php');
 //panggil file navi-walikelas.php untuk menghubungkan navigasi walikelas ke konten
 include('system/inc/nav-walikelas.php');
 //mendapatkan informasi dari hasil absen siswa
-$nm_kelas = $_GET['kelas'];
-$query = mysql_query("SELECT * FROM kelas");
-$data = mysql_fetch_array($query);
+FILTER_INPUT(INPUT_GET, 'kelas');
+$this->db->from('kelas');
+$query->db->get();
+$data = $query->result_array();
 //merubah waktu kedalam format indonesia
 $hari = array ("Minggu","Senin","Selasa","Rabu","Kamis","Jumat","Sabtu");
 $bln = array ("","Januari","Februari","Maret","April","Mei","Juni","Juli","Agustus","September","Oktober","November","Desember");
@@ -27,8 +28,8 @@ $bln = array ("","Januari","Februari","Maret","April","Mei","Juni","Juli","Agust
 				<div class="col-lg-12 col-md-12">
 				<?php 
 				//kode php ini kita gunakan untuk menampilkan pesan absen sukses
-				if (!empty($_GET['message']) && $_GET['message'] == 'absen-success') {
-				echo '<div class="alert alert-success alert-fill alert-close alert-dismissible fade in" role="alert">
+				if (!empty(FILTER_INPUT(INPUT_GET, 'message')) && FILTER_INPUT(INPUT_GET, 'message') == 'absen-success') {
+				<?= '<div class="alert alert-success alert-fill alert-close alert-dismissible fade in" role="alert"> >?
 			  	<button type="button" class="close" data-dismiss="alert" aria-label="Close">
 			  	<span aria-hidden="true">&times;</span> </button>
 			  	SUCCESS !! - Siswa Berhasil Diabsen ! </div>';
@@ -42,8 +43,8 @@ $bln = array ("","Januari","Februari","Maret","April","Mei","Juni","Juli","Agust
 					<div class="tbl-row">
 						<div class="tbl-cell tbl-cell-title">
 							<div align="center">
-							<h3 align="center"> DATA ABSENSI SHOLAT KELAS : <?php echo $nm_kelas; ?></h3>
-							<h7 align="center">( <?php echo "".$hari[date("w")].", ".date("j")." ".$bln[date("n")]." ".date("Y");""; ?> )</h7>
+							<h3 align="center"> DATA ABSENSI SHOLAT KELAS : <?php <?= $nm_kelas >?; ?></h3>
+							<h7 align="center">( <?php <?= "".$hari[date("w")].", ".date("j")." ".$bln[date("n")]." ".date("Y");"" >?; ?> )</h7>
 							</div>
 						</div>
 					</div>
@@ -66,44 +67,70 @@ $bln = array ("","Januari","Februari","Maret","April","Mei","Juni","Juli","Agust
 							
 							<tbody>
 								<?php
-								$nm_kelas=$_GET['kelas'];
-								$tanggal=$_GET['tanggal'];
-								$query=mysql_query("SELECT * FROM absensi_sholat WHERE nm_kelas='$nm_kelas' AND tanggal='$tanggal' ORDER BY nis ASC",$connect);
-								while($row=mysql_fetch_array($query)){
-								$data=mysql_fetch_array(mysql_query("SELECT * FROM siswa WHERE nis='$row[nis]'",$connect));
+								FILTER_INPUT(INPUT_GET, 'kelas');
+								FILTER_INPUT(INPUT_GET, 'tanggal');
+								$this->db->from('absensi_sholat');
+								$this->db->where('$nm_kelas', '$tanggal');
+								$this->db->order_by('nis', 'asc');
+								$query->db->get();
+								
+								while($row=$query->result_array()){
+									$data = $this->db->from('siswa');
+										$this->db->where('$row[nis]');
+										$query->db->get();
+									$no = $data->result_array();
+								
 								$ket=$row['ket'];
-								$keterangan=mysql_fetch_array(mysql_query("SELECT * FROM absensi_sholat WHERE nis='$row[nis]'",$connect));
-
+									
+									$keterangan = 	$this->db->from('absensi_sholat');
+											$this->db->where('$row[nis]');
+											$query->db->get();
+									$no = $keterangan->result_array();
+								
 								?>
 								<tr>
-								<td><?php echo $data['nama'];?></td>
-								<td><?php echo $data['nis'];?></td>
+								<td><?php <?= $data['nama'] >? ;?></td>
+								<td><?php <?= $data['nis'] >? ;?></td>
 								<td align="center">
 									<?php
-									$hadir=mysql_query("SELECT * FROM absensi_sholat WHERE nis='$row[nis]' AND tanggal='$tanggal' AND ket='S'",$connect);
-									$jumlah=mysql_num_rows($hadir);
-									echo $jumlah;
+									$this->db->from('absensi_sholat');
+									$this->db->where('$row=[nis]', '$tanggal', 'S');
+									$query->db->get();
+									
+									$jumlah= $hadir->result_array();
+									<?= $jumlah >?;
 									?>
 								</td>
 								<td align="center">
 									<?php
-									$hadir=mysql_query("SELECT * FROM absensi_sholat WHERE nis='$row[nis]' AND tanggal='$tanggal' AND ket='TS'",$connect);
-									$jumlah=mysql_num_rows($hadir);
-									echo $jumlah;
+									$this->db->from('absensi_sholat');
+									$this->db->where('$row=[nis]', '$tanggal', 'TS');
+									$query->db->get();
+									
+									$jumlah= $hadir->result_array();
+									<?= $jumlah >?;
 									?>
 								</td>
 								<td align="center">
 									<?php
-									$hadir=mysql_query("SELECT * FROM absensi_sholat WHERE nis='$row[nis]' AND tanggal='$tanggal' AND ket='HL'",$connect);
-									$jumlah=mysql_num_rows($hadir);
-									echo $jumlah;
+									
+									$this->db->from('absensi_sholat');
+									$this->db->where('$row=[nis]', '$tanggal', 'HL');
+									$query->db->get();
+									
+									$jumlah= $hadir->result_array();
+									<?= $jumlah >?;
 									?>
 								</td>
 								<td align="center">
 									<?php
-									$hadir=mysql_query("SELECT * FROM absensi_sholat WHERE nis='$row[nis]' AND tanggal='$tanggal' AND ket IN ('TS', 'HL')",$connect);
-									$jumlah=mysql_num_rows($hadir);
-									echo $jumlah;
+									
+									$this->db->from('absensi_sholat');
+									$this->db->where('$row=[nis]', '$tanggal', 'TS', 'HL');
+									$query->db->get();
+									
+									$jumlah= $hadir->result_array();
+									<?= $jumlah >?;
 									?>
 								</td>
 								</tr>

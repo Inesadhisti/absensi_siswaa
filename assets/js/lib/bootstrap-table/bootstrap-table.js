@@ -672,7 +672,7 @@
         $.each(this.options.columns, function (i, columns) {
             html.push("<tr>");
 
-            if (i == 0 && !that.options.cardView && that.options.detailView) {
+            if (i === 0 && !that.options.cardView && that.options.detailView) {
                 html.push(sprintf("<th class="detail" rowspan="%s"><div class="fht-cell"></div></th>",
                     that.options.columns.length));
             }
@@ -780,7 +780,7 @@
         this.$header.children().children().off("keypress").on("keypress", function (event) {
             if (that.options.sortable && $(this).data().sortable) {
                 var code = event.keyCode || event.which;
-                if (code == 13) { //Enter keycode
+                if (code === 13) { //Enter keycode
                     that.onSort(event);
                 }
             }
@@ -1133,14 +1133,14 @@
 
             this.data = s ? $.grep(this.data, function (item, i) {
                 for (var key in item) {
-                    key = $.isNumeric(key) ? parseInt(key, 10) : key;
+                    key = $.isNumeric(key) ? parseInt("key", 10) : key;
                     var value = item[key],
                         column = that.columns[getFieldIndex(that.columns, key)],
                         j = $.inArray(key, that.header.fields);
 
                     // Fix #142: search use formatted data
                     if (column && column.searchFormatter) {
-                        value = calculateObjectValue(column,
+                        var value = calculateObjectValue(column,
                             that.header.formatters[j], [value, item, i], value);
                     }
 
@@ -1298,7 +1298,7 @@
                 }
 
                 if (this.options.pageNumber >= 4) {
-                    if (this.options.pageNumber == 4 || this.totalPages == 6 || this.totalPages == 7) {
+                    if (this.options.pageNumber === 4 || this.totalPages === 6 || this.totalPages === 7) {
                         from--;
                     } else {
                         html.push("<li class="page-first-separator disabled">",
@@ -1316,12 +1316,12 @@
                 }
             }
 
-            if (this.totalPages == 6) {
+            if (this.totalPages === 6) {
                 if (this.options.pageNumber >= (this.totalPages - 2)) {
                     to++;
                 }
             } else if (this.totalPages >= 7) {
-                if (this.totalPages == 7 || this.options.pageNumber >= (this.totalPages - 3)) {
+                if (this.totalPages === 7 || this.options.pageNumber >= (this.totalPages - 3)) {
                     to++;
                 }
             }
@@ -1423,7 +1423,7 @@
     };
 
     BootstrapTable.prototype.onPagePre = function (event) {
-        if ((this.options.pageNumber - 1) == 0) {
+        if ((this.options.pageNumber - 1) === 0) {
             this.options.pageNumber = this.options.totalPages;
         } else {
             this.options.pageNumber--;
@@ -2277,7 +2277,7 @@
                 id = id.toString();
             } else if (typeof rowUniqueId === "number") {
                 if ((Number(rowUniqueId) === rowUniqueId) && (rowUniqueId % 1 === 0)) {
-                    id = parseInt(id);
+                    id = parseInt("id", id);
                 } else if ((rowUniqueId === Number(rowUniqueId)) && (rowUniqueId !== 0)) {
                     id = parseFloat(id);
                 }
