@@ -43,6 +43,7 @@ $bln = array ("","Januari","Februari","Maret","April","Mei","Juni","Juli","Agust
 									<th><center>Nama</center></th>
 									<th><center>Kehadiran</center></th>
 									<th><center>NIS</center></th>
+									<th><center>Keterangan</center></th>
 									<th><center>Kelas</center></th>
 									</tr>
 								</thead>
@@ -71,6 +72,7 @@ $bln = array ("","Januari","Februari","Maret","April","Mei","Juni","Juli","Agust
 									?>
 									</td>
 									<td><?php echo $data['nis'];?></td>
+									<td> <?php echo '<input id="table-sm" class="table table-bordered table-hover table-sm" name="keterangan" placeholder="Keterangan" type="text">'; ?> </td>
 									<td align="center"><?php echo $data['nm_kelas'];?></td>
 
 									</tr>

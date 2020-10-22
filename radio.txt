@@ -1,0 +1,31 @@
+<tbody>
+									         <?php
+									         //penting nech buat kasih nilai awal cekbox
+									         $no=0;
+									         $query=mysql_query("SELECT * FROM siswa WHERE nm_kelas='$nm_kelas' ORDER BY nis ASC");
+									         while($data=mysql_fetch_array($query)){
+									         ?>
+									         <tr> 
+									         <input type="hidden" value="<?php echo $data['nm_kelas'];?>" name="nm_kelas"/>
+									         <input type="hidden" value="<?php echo $tanggal=date("d/m/Y"); ?>" name="tanggal"/>
+									         <td><?php echo $data['nama'];?></td>
+									         <td class="radio" align="center">
+									         <?php
+									         echo " <input type='radio' name='$data[nis]' value='H' id='$no'><label for='$no'>Hadir  </label>";
+									         $no++;
+									         echo " <input type='radio' name='$data[nis]' value='S' id='$no'><label for='$no'>Sakit  </label>";
+									         $no++;
+									         echo " <input type='radio' name='$data[nis]' value='I' id='$no'><label for='$no'>Ijin  </label>";
+									         $no++;
+									         echo " <input type='radio' name='$data[nis]' value='A' id='$no'><label for='$no'>Alfa  </label>";
+									         $no++;
+									         ?>
+									         </td>
+									         <td><?php echo $data['nis'];?></td>
+									         <td> <?php echo '<input id="table-sm" class="table table-bordered table-hover table-sm" name="keterangan" placeholder="Keterangan" type="text">'; ?> </td>
+									         <td align="center"><?php echo $data['nm_kelas'];?></td>
+									         </tr>
+									         <?php
+									         }
+									         ?>
+									        </tbody>

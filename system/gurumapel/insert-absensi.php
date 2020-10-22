@@ -37,7 +37,7 @@ else if(strtotime(date("H:i")) >= strtotime("13:01") && strtotime(date("H:i")) <
 else{
 	$jp = "*Diluar Jam Pelajaran*";
 }
-	$jp = "7-8";
+
 ?>
 
 
@@ -66,6 +66,7 @@ else{
 									<th><center>Nama</center></th>
 									<th><center>Kehadiran</center></th>
 									<th><center>NIS</center></th>
+									<th><center>Keterangan</center></th>
 									<th><center>Kelas</center></th>
 									</tr>
 								</thead>
@@ -100,7 +101,7 @@ else{
 										?>
 									</td>
 									<td><?php echo $data['nis'];?></td>
-									
+									<td><?php echo '<input id="table-sm" class="table table-bordered table-hover table-sm" name="keterangan-'.$data['nis'].'" placeholder="Keterangan" type="text" value="'; if(!empty($absen)) echo $absen['keterangan']; echo '">'; ?> </td>
 									<td align="center"><?php echo $data['nm_kelas'];?></td>
 									</tr>
 									<?php

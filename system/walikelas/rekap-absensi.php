@@ -115,6 +115,7 @@ include('system/inc/nav-walikelas.php');
 								<th><center>Ijin (I)</center></th>
 								<th><center>Alfa (A)</center></th>
 								<th><center>Jumlah Tidak Hadir</center></th>
+								<th><center>Keterangan</center></th>
 								</tr>
 							</thead>
 							
@@ -169,6 +170,7 @@ include('system/inc/nav-walikelas.php');
 									echo $jumlah;
 									?>
 								</td>
+								<td><?php echo $keterangan['keterangan'];?></td>
 								</tr>
 								<?php
 								}

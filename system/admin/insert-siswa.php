@@ -110,7 +110,7 @@ include('system/inc/nav-admin.php');
 							<div class="col-md-12 m-t-lg">
 								<div class="form-group" align="center">
 									<div class="btn-group" role="group">
-										<button type="submit" class="btn btn-default font-icon font-icon-plus" data-toggle="tooltip" data-placement="top" title="Tambah?"></button>
+										<button type="submit" class="btn btn-default font-icon font-icon-plus" data-toggle="tooltip" data-placement="top" title="Tambah?" name="submit" value="true"></button>
 										<a href="javascript:history.back()" class="btn btn-default font-icon font-icon-refresh-2" data-toggle="tooltip" data-placement="top" title="Kembali?"></a>
 									</div>
 								</div>
@@ -120,7 +120,26 @@ include('system/inc/nav-admin.php');
 				</div><!--.card-block-->
 			</section>
 
-			
+			<section class="card">
+				<h6 align="center" class="with-border m-t-lg"><strong>TAMBAH SISWA DENGAN FILE CSV</strong></h6>	
+				<div class="card-block">
+					<form action="page.php?process-insert-siswa" enctype="multipart/form-data" method="POST">
+						<div class="form-group">
+							<label for="file-siswa">Pilih File CSV dengan urutan data (*NIS, *Nama, *Jenis Kelamin, Tanggal Lahir, Tempat Lahir, Alamat, *Nama Kelas, Nama Orang Tua)</label>
+							<label for="file-siswa">Keterangan: *tidak boleh kosong</label>
+							<input type="file" class="form-control-file" id="file-siswa" accept=".csv" name="siswa">
+						</div>
+						<div class="col-md-12 m-t-lg">
+							<div class="form-group" align="center">
+								<div class="btn-group" role="group">
+									<button type="submit" class="btn btn-default font-icon font-icon-plus" data-toggle="tooltip" data-placement="top" title="Tambah?" name="submit-csv" value="true"></button>
+									<a href="javascript:history.back()" class="btn btn-default font-icon font-icon-refresh-2" data-toggle="tooltip" data-placement="top" title="Kembali?"></a>
+								</div>
+							</div>
+						</div><!--.col-md-12-->
+					</form>
+				</div><!--.card-block-->
+			</section>
 		
 		</div><!--.container-fluid-->
 	</div><!--.page-content-->	

@@ -24,7 +24,7 @@ if(mysql_num_rows($ada)>0)
 	}
 
 else {
-	$query = mysql_query ("insert into user values('','$user','$pass','$confirm','$level','$nama','$foto')")
+	$query = mysql_query ("insert into user values('','$user','$pass','$confirm','$level','$nama')")
 			or die (mysql_error());
 	header('location:page.php?data-user&message=insert-success');
 	} 

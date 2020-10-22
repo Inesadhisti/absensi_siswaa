@@ -63,17 +63,20 @@ header('location:page.php?error-404&not=found');
 					
                     <div class="form-group">
 					<div class="form-control-wrapper">
-                    <input 	id="myInput" class="form-control" name="pass" placeholder="Password" type="password" 
+                    <input 	id="masuk-pass" class="form-control" name="pass" placeholder="Password" type="password" 
 						data-validation="[L>=5]"
 						data-validation-message="Password Tidak Boleh Kurang Dari 5 Karakter.">
 		            </div>									
                     </div>
-
-				
-					<div class="form-group form-group-checkbox">
-					<input id="cek-agree" name="cek[agree]" type="checkbox" type="checkbox" onclick="myFunction()">  Show Password
-					</div>
 					
+					<div class="form-group form-group-checkbox">
+					<div class="checkbox float-left">
+					<input 	id="cek-agree" name="cek[agree]" type="checkbox"
+							data-validation="[NOTEMPTY]"
+							data-validation-message="Ceklis jika sudah benar!">
+					<label for="cek-agree">Apakah data anda benar?</label>
+					</div>
+					</div>
 					
                     <button type="submit" name="login" class="btn btn-success btn-rounded">Masuk</button>
                     <p class="sign-note">Lupa Kata Sandi? <a href="page.php?lupa-sandi">Hubungi Admin</a></p>
@@ -82,17 +85,6 @@ header('location:page.php?error-404&not=found');
             </div><!--.container-fluid-->
         </div><!--.page-center-in-->
     </div><!--.page-center-->
-
-    <script>
-		function myFunction() {
-  		var x = document.getElementById("myInput");
-  			if (x.type === "password") {
-    			x.type = "text";
-  			} else {
-    			x.type = "password";
-    		}
-    	}
-	</script>
 	
 <script src="assets/js/lib/jquery/jquery.min.js"></script>
 <script src="assets/js/lib/tether/tether.min.js"></script>

@@ -60,6 +60,7 @@ $bln = array ("","Januari","Februari","Maret","April","Mei","Juni","Juli","Agust
 								<th><center>Tidak Sholat (TS)</center></th>
 								<th><center>Halangan (HL)</center></th>
 								<th><center>Jumlah Tidak Sholat</center></th>
+								<th><center>Keterangan</center></th>
 
 								</tr>
 							</thead>
@@ -106,6 +107,8 @@ $bln = array ("","Januari","Februari","Maret","April","Mei","Juni","Juli","Agust
 									echo $jumlah;
 									?>
 								</td>
+								<td><?php echo $keterangan['keterangan'];?></td>
+
 								</tr>
 								<?php
 								}

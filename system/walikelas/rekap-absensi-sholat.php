@@ -6,7 +6,7 @@ include('system/config/conn.php');
 //panggil file header.php untuk menghubungkan konten bagian atas
 include('system/inc/header.php');
 //memberi judul halaman
-echo '<title>Rekap Absensi Sholat- MARI-ABSEN</title>';
+echo '<title>Rekap Absensi - MARI-ABSEN</title>';
 //panggil file css.php untuk desain atau tema
 include('system/inc/css.php');
 //panggil file navi-walikelas.php untuk menghubungkan navigasi walikelas ke konten
@@ -113,7 +113,8 @@ include('system/inc/nav-walikelas.php');
 								<th><center>Sholat (S)</center></th>
 								<th><center>Tidak Sholat (TS)</center></th>
 								<th><center>Halangan (HL)</center></th>
-								<th><center>Jumlah Tidak Sholat</center></th>				
+								<th><center>Jumlah Tidak Sholat</center></th>
+								<th><center>Keterangan</center></th>					
 								</tr>
 							</thead>
 							
@@ -161,6 +162,7 @@ include('system/inc/nav-walikelas.php');
 									$jumlah=mysql_num_rows($hadir);
 									echo $jumlah;
 									?>
+								<td><?php echo $keterangan['keterangan'];?></td>
 
 								</td>
 
