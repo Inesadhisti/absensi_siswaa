@@ -88,7 +88,7 @@ include('system/inc/nav-admin.php');
 								$posisi = ($pg-1)*$batas; }
 								$sql = mysql_query("SELECT * FROM kelas ORDER BY nm_kelas ASC limit $posisi, $batas ");
 								$no = 1+$posisi;
-								while ($data = mysql_fetch_assoc($sql)) 
+								while ($data = $sql->result_array()) 
 								{
 								?>
 								<tr>
