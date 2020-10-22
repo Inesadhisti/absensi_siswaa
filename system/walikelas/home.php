@@ -88,7 +88,9 @@ $bln = array ("","Januari","Februari","Maret","April","Mei","Juni","Juli","Agust
 						$kelas=mysql_query("select * from kelas order by nm_kelas asc",$connect);
 						while($row=mysql_fetch_array($kelas)){
 						//mencari jumlah siswa di masing-masing kelas
-						$siswa=mysql_query("select * from siswa where nm_kelas='$row[nm_kelas]'",$connect);
+						$this->db->from('siswa');
+						$this->db->where('nm_kelas' , '$row[nm_kelas]');
+						$siswa= $this->db->get();
 						$jumlah=mysql_num_rows($siswa);
 						?>
 						<tr>
