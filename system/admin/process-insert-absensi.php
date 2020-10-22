@@ -7,7 +7,7 @@ $tanggal=$_POST['tanggal'];
 if(isset($_POST['info'])){
 	if(!empty($_POST['hadir'])){
 		//parameter
-		$nis=$_POST['hadir'];
+		$nis=FILTER_INPUT(INPUT_POST,'hadir');
 		$jumlah=count($nis);
 		for($i=0;$i<$jumlah;$i++){
 			$hadir=mysql_query("INSERT INTO absensi(nis,nm_kelas,ket,tanggal,info) VALUES ('$nis[$i]','$nm_kelas','H','$tanggal','succes')",$connect);
