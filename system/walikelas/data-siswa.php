@@ -6,16 +6,15 @@ include('system/config/conn.php');
 //panggil file header.php untuk menghubungkan konten bagian atas
 include('system/inc/header.php');
 //memberi judul halaman
-<?= '<title>Data Siswa - MARI-ABSEN</title>' >?;
+echo '<title>Data Siswa - MARI-ABSEN</title>';
 //panggil file css.php untuk desain atau tema
 include('system/inc/css.php');
 //panggil file navi-walikelas.php untuk menghubungkan navigasi walikelas ke konten
 include('system/inc/nav-walikelas.php');
 //mendapatkan informasi dari data kelas
-FILTER_INPUT(INPUT_GET, 'kelas');
-$this->db->from('kelas');
-$query->db->get();
-$data = $query->result_array();
+$nm_kelas = $_GET['kelas'];
+$query = mysql_query("SELECT * FROM kelas");
+$data = mysql_fetch_array($query);
 ?>
 
 	<div class="page-content">
@@ -25,7 +24,7 @@ $data = $query->result_array();
 				<header class="box-typical-header">
 					<div class="tbl-row">
 						<div class="tbl-cell tbl-cell-title">
-							<h3> DATA SISWA KELAS : <?php <?= $nm_kelas >?; ?></h3>
+							<h3> DATA SISWA KELAS : <?php echo $nm_kelas; ?></h3>
 						</div>							
 						<form  id="form-insert" name="form-insert" method="get" action="search/w-siswa.php">
 							<div class="tbl-cell tbl-cell-icon-right col-lg-6"> </div>
@@ -61,34 +60,29 @@ $data = $query->result_array();
 							   
 							<tbody>
 								<?php
-								FILTER_INPUT(INPUT_GET, 'kelas');
+								$nm_kelas=$_GET['kelas'];
 								$batas = 10;
-								$pg = isset(FILTER_INPUT(INPUT_GET, 'pg');) ? FILTER_INPUT(INPUT_GET, 'pg');:"";
+								$pg = isset($_GET['pg']) ? $_GET['pg']:"";
 								if (empty($pg)) {
 								$posisi = 0;
 								$pg = 1;
 								} else {
 								$posisi = ($pg-1)*$batas; }
-								$this->db->from('siswa');
-								$this->db->where('$nm_kelas');
-								$this->db->order_by('nis', 'asc');
-								$this->db->limit('$posisi', '$batas');
-								$query->db->get();
-								
+								$sql = mysql_query("SELECT * FROM siswa WHERE nm_kelas='$nm_kelas' ORDER BY nis ASC limit $posisi, $batas ");
 								$no = 1+$posisi;
-								while ($data = $sql->result_array()) 
+								while ($data = mysql_fetch_assoc($sql)) 
 								{
 								?>
 						
 								<tr>
-								<td><?php <?= $data['nama'] >?; ?></td>
-								<td class="color-blue-grey-lighter"><?php <?= $data['nis'] >?; ?></td>
-								<td align="center"><?php <?= $data['nm_kelas'] >?; ?></td>
-								<td align="center"><?php <?= $data['jns_kel'] >?; ?></td>
-								<td class="color-blue-grey-lighter"><?php <?= $data['alamat'] >?; ?></td>
+								<td><?php echo $data['nama']; ?></td>
+								<td class="color-blue-grey-lighter"><?php echo $data['nis']; ?></td>
+								<td align="center"><?php echo $data['nm_kelas']; ?></td>
+								<td align="center"><?php echo $data['jns_kel']; ?></td>
+								<td class="color-blue-grey-lighter"><?php echo $data['alamat']; ?></td>
 								<td align="center">
 									<div class="btn-group btn-group-sm" role="group" aria-label="Basic example">
-										<a href="page.php?w-detail-siswa&id=<?php <?= $data['id_siswa'] >?;?>" class="btn btn btn-default" data-toggle="tooltip" data-placement="top" title="Detail?"><i class="font-icon font-icon-eye"></i> </a>
+										<a href="page.php?w-detail-siswa&id=<?php echo $data['id_siswa'];?>" class="btn btn btn-default" data-toggle="tooltip" data-placement="top" title="Detail?"><i class="font-icon font-icon-eye"></i> </a>
 									</div>
 								</td>
 								</tr>
@@ -104,20 +98,17 @@ $data = $query->result_array();
 					<div class="col-md-6">
 						<?php
 						//hitung jumlah data
-						FILTER_INPUT(INPUT_GET, 'kelas');
-						$this->db->from('siswa');
-						$this->db->where('$nm_kelas');
-						$query->db->get();
-						
-          				$jml_data=$query0>result_array();
+						$nm_kelas=$_GET['kelas'];
+						$query = mysql_query("SELECT * FROM siswa WHERE nm_kelas='$nm_kelas'");
+          				$jml_data=mysql_num_rows($query);
     					
 						//Jumlah halaman
 						$JmlHalaman = ceil($jml_data/$batas); //ceil digunakan untuk pembulatan keatas
 						?>
 						<br>
   						<span class="label label-success">Info! </span> Total  
-						<span class="label label-primary">Siswa : <?php <?= $jml_data >?; ?> </span>
-  						<span class="label label-primary">Halaman : <?php <?= $JmlHalaman >?; ?> </span>
+						<span class="label label-primary">Siswa : <?php echo $jml_data; ?> </span>
+  						<span class="label label-primary">Halaman : <?php echo $JmlHalaman; ?> </span>
 					</div>
 					
 					<div class="col-md-6" align="right">
@@ -171,7 +162,7 @@ $data = $query->result_array();
 								}
  
 								//Tampilkan navigasi
-								<?= $prev . $nmr . $next >?;
+								echo $prev . $nmr . $next;
 								?>
 							</ul>
 						</nav>

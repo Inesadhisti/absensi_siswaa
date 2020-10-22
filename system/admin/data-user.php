@@ -6,7 +6,7 @@ include('system/config/conn.php');
 //panggil file header.php untuk menghubungkan konten bagian atas
 include('system/inc/header.php');
 //memberi judul halaman
-<?= '<title>Data User - MARI-ABSEN</title>' >?;
+echo '<title>Data User - MARI-ABSEN</title>';
 //panggil file css.php untuk desain atau tema
 include('system/inc/css.php');
 //panggil file navi-admin.php untuk menghubungkan navigasi admin ke konten
@@ -20,22 +20,22 @@ include('system/inc/nav-admin.php');
 				<div class="col-lg-12 col-md-12">
 				<?php 
 				//kode php ini kita gunakan untuk menampilkan pesan tambah data sukses
-				if (!empty(FILTER_INPUT(INPUT_GET, 'message')) && FILTER_INPUT(INPUT_GET, 'message') == 'insert-success') {
-				<?= '<div class="alert alert-success alert-fill alert-close alert-dismissible fade in" role="alert"> >?
+				if (!empty($_GET['message']) && $_GET['message'] == 'insert-success') {
+				echo '<div class="alert alert-success alert-fill alert-close alert-dismissible fade in" role="alert">
 				<button type="button" class="close" data-dismiss="alert" aria-label="Close">
 				<span aria-hidden="true">&times;</span>
 				</button> SUCCESS !! - Data User Berhasil Di Tambah ! </div>';
 				} 
 				//kode php ini kita gunakan untuk menampilkan pesan edit data sukses
-				else if (!empty(FILTER_INPUT(INPUT_GET, 'message')) && FILTER_INPUT(INPUT_GET, 'message') == 'edit-success') {
-				<?= '<div class="alert alert-success alert-fill alert-close alert-dismissible fade in" role="alert"> >?
+				else if (!empty($_GET['message']) && $_GET['message'] == 'edit-success') {
+				echo '<div class="alert alert-success alert-fill alert-close alert-dismissible fade in" role="alert">
 				<button type="button" class="close" data-dismiss="alert" aria-label="Close">
 				<span aria-hidden="true">&times;</span>
 				</button> SUCCESS !! - Data User Berhasil Di Edit ! </div>';
 				} 
 				//kode php ini kita gunakan untuk menampilkan pesan tambah data sukses
-				else if (!empty(FILTER_INPUT(INPUT_GET, 'message')) && FILTER_INPUT(INPUT_GET, 'message') == 'delete-success') {
-				<?= '<div class="alert alert-success alert-fill alert-close alert-dismissible fade in" role="alert"> >?
+				else if (!empty($_GET['message']) && $_GET['message'] == 'delete-success') {
+				echo '<div class="alert alert-success alert-fill alert-close alert-dismissible fade in" role="alert">
 				<button type="button" class="close" data-dismiss="alert" aria-label="Close">
 				<span aria-hidden="true">&times;</span>
 				</button> SUCCESS !! - Data User Berhasil Di Hapus ! </div>';
@@ -84,7 +84,7 @@ include('system/inc/nav-admin.php');
 							<tbody>
 								<?php								
 								$batas = 10;
-								$pg = isset(FILTER_INPUT(INPUT_GET, 'pg');) ? FILTER_INPUT(INPUT_GET, 'pg');:"";
+								$pg = isset($_GET['pg']) ? $_GET['pg']:"";
 								if (empty($pg)) {
 								$posisi = 0;
 								$pg = 1;
@@ -96,15 +96,15 @@ include('system/inc/nav-admin.php');
 								{
 								?>
 								<tr>
-								<td><?php <?= $data['nama'] >?; ?></td>
-								<td class="color-blue-grey-lighter" align="center"><?php <?= $data['level'] >?; ?></td>
-								<td align="center"><?php <?= $data['user'] >?; ?></td>
+								<td><?php echo $data['nama']; ?></td>
+								<td class="color-blue-grey-lighter" align="center"><?php echo $data['level']; ?></td>
+								<td align="center"><?php echo $data['user']; ?></td>
 								<td class="color-blue-grey-lighter" align="center">******</td>
 								<td align="center">
 									<div class="btn-group btn-group-sm" role="group" aria-label="Basic example">
-										<a href="page.php?edit-user&id=<?php <?= $data['id_user'] >?;?>" class="btn btn-default font-icon font-icon-pencil" data-toggle="tooltip" data-placement="top" title="Edit?"></a>
-										<a href="page.php?detail-user&id=<?php <?= $data['id_user'] >?;?>" class="btn btn-default font-icon font-icon-eye" data-toggle="tooltip" data-placement="top" title="Detail?"></a>
-										<a href="page.php?delete-user&id=<?php <?= $data['id_user'] >?;?>" onClick="return confirm('Yakin akan menghapus data ini?');" class="btn btn-default font-icon font-icon-trash" data-toggle="tooltip" data-placement="top" title="Hapus?"></a>
+										<a href="page.php?edit-user&id=<?php echo $data['id_user'];?>" class="btn btn-default font-icon font-icon-pencil" data-toggle="tooltip" data-placement="top" title="Edit?"></a>
+										<a href="page.php?detail-user&id=<?php echo $data['id_user'];?>" class="btn btn-default font-icon font-icon-eye" data-toggle="tooltip" data-placement="top" title="Detail?"></a>
+										<a href="page.php?delete-user&id=<?php echo $data['id_user'];?>" onClick="return confirm('Yakin akan menghapus data ini?');" class="btn btn-default font-icon font-icon-trash" data-toggle="tooltip" data-placement="top" title="Hapus?"></a>
 										<a href="page.php?tambah-user" class="btn btn-default font-icon font-icon-plus" data-toggle="tooltip" data-placement="top" title="Tambah?"></a>
 									</div>
 								</td>
@@ -127,8 +127,8 @@ include('system/inc/nav-admin.php');
 						?>
 						<br>
   						<span class="label label-success">Info! </span> Total  
-						<span class="label label-primary">User : <?php <?= $jml_data >?; ?> </span>
-  						<span class="label label-primary">Halaman : <?php <?= $JmlHalaman >?; ?> </span>
+						<span class="label label-primary">User : <?php echo $jml_data; ?> </span>
+  						<span class="label label-primary">Halaman : <?php echo $JmlHalaman; ?> </span>
 					</div>
 					
 					<div class="col-md-6" align="right">
@@ -182,7 +182,7 @@ include('system/inc/nav-admin.php');
 								}
  
 								//Tampilkan navigasi
-								<?= $prev . $nmr . $next >?;
+								echo $prev . $nmr . $next;
 								?>
 							</ul>
 						</nav>

@@ -6,7 +6,7 @@ include('system/config/conn.php');
 //panggil file header.php untuk menghubungkan konten bagian atas
 include('system/inc/header.php');
 //memberi judul halaman
-<?= '<title>Admin - MARI-ABSEN</title>' >?;
+echo '<title>Admin - MARI-ABSEN</title>';
 //panggil file css.php untuk desain atau tema
 include('system/inc/css.php');
 //panggil file navi-admin.php untuk menghubungkan navigasi admin ke konten
@@ -20,11 +20,11 @@ include('system/inc/nav-admin.php');
 				<div class="col-lg-12 col-md-12">
 					<?php 
 					//kode php ini kita gunakan untuk menampilkan pesan Selamat datang user!
-					if (!empty(FILTER_INPUT(INPUT_GET, 'sign-in')) && FILTER_INPUT(INPUT_GET, 'sign-in') == 'succes') {
-					<?= '<div class="alert alert-success alert-fill alert-close alert-dismissible fade in" role="alert"> >?
+					if (!empty($_GET['sign-in']) && $_GET['sign-in'] == 'succes') {
+					echo '<div class="alert alert-success alert-fill alert-close alert-dismissible fade in" role="alert">
 					<button type="button" class="close" data-dismiss="alert" aria-label="Close">
 					<span aria-hidden="true">&times;</span>
-					</button> Assalamualaikum <strong>'.FILTER_INPUT(INPUT_SESSION, 'nama').' ! </strong> Selamat Datang Di MARI-ABSEN </div>';
+					</button> Assalamualaikum <strong>'.$_SESSION['nama'].' ! </strong> Selamat Datang Di MARI-ABSEN </div>';
 					}
 					?>
 				</div>
@@ -70,31 +70,27 @@ include('system/inc/nav-admin.php');
 							<tbody>
 								<?php								
 								$batas = 5;
-								$pg = isset(FILTER_INPUT(INPUT_GET, 'pg')) ? FILTER_INPUT(INPUT_GET, 'pg'):"";
+								$pg = isset($_GET['pg']) ? $_GET['pg']:"";
 								if (empty($pg)){
 								$posisi = 0;
 								$pg = 1;
 								} else {
 								$posisi = ($pg-1)*$batas; }
-								$this->db->from('user');
-								$this->db->order_by('nama', 'asc');
-								$this->db->limit('$posisi', '$batas');
-								$query->db->get();
-		
+								$sql = mysql_query("SELECT * FROM user ORDER BY nama ASC limit $posisi, $batas ");
 								$no = 1+$posisi;
-								while ($data = $sql->result_array()) 
+								while ($data = mysql_fetch_assoc($sql)) 
 								{
 								?>
 								<tr>
-								<td><?php <?= $data['nama'] >?; ?></td>
-								<td class="color-blue-grey-lighter" align="center"><?php <?= $data['level'] >?; ?></td>
-								<td align="center"><?php <?= $data['user'] >?; ?></td>
+								<td><?php echo $data['nama']; ?></td>
+								<td class="color-blue-grey-lighter" align="center"><?php echo $data['level']; ?></td>
+								<td align="center"><?php echo $data['user']; ?></td>
 								<td class="color-blue-grey-lighter" align="center">******</td>
 								<td align="center">
 									<div class="btn-group btn-group-sm" role="group" aria-label="Basic example">
-										<a href="page.php?edit-user&id=<?php <?= $data['id_user'] >?;?>" class="btn btn-default font-icon font-icon-pencil" data-toggle="tooltip" data-placement="top" title="Edit?"></a>
-										<a href="page.php?detail-user&id=<?php <?= $data['id_user'] >?;?>" class="btn btn-default font-icon font-icon-eye" data-toggle="tooltip" data-placement="top" title="Detail?"></a>
-										<a href="page.php?delete-user&id=<?php <?= $data['id_user'] >?;?>" onClick="return confirm('Yakin akan menghapus data ini?');" class="btn btn-default font-icon font-icon-trash" data-toggle="tooltip" data-placement="top" title="Hapus?"></a>
+										<a href="page.php?edit-user&id=<?php echo $data['id_user'];?>" class="btn btn-default font-icon font-icon-pencil" data-toggle="tooltip" data-placement="top" title="Edit?"></a>
+										<a href="page.php?detail-user&id=<?php echo $data['id_user'];?>" class="btn btn-default font-icon font-icon-eye" data-toggle="tooltip" data-placement="top" title="Detail?"></a>
+										<a href="page.php?delete-user&id=<?php echo $data['id_user'];?>" onClick="return confirm('Yakin akan menghapus data ini?');" class="btn btn-default font-icon font-icon-trash" data-toggle="tooltip" data-placement="top" title="Hapus?"></a>
 										<a href="page.php?tambah-user" class="btn btn-default font-icon font-icon-plus" data-toggle="tooltip" data-placement="top" title="Tambah?"></a>
 									</div>
 								</td>
@@ -111,15 +107,14 @@ include('system/inc/nav-admin.php');
 					<div class="col-md-6">
 						<?php
 						//hitung jumlah data
-						$this->db->count_all_results('user');
-						
+						$jml_data = mysql_num_rows(mysql_query("SELECT * FROM user"));
 						//Jumlah halaman
 						$JmlHalaman = ceil($jml_data/$batas); //ceil digunakan untuk pembulatan keatas
 						?>
 						<br>
   						<span class="label label-success">Info! </span> Total  
-						<span class="label label-primary">User : <?php <?= $jml_data >?; ?> </span>
-  						<span class="label label-primary">Halaman : <?php <?= $JmlHalaman >?; ?> </span>
+						<span class="label label-primary">User : <?php echo $jml_data; ?> </span>
+  						<span class="label label-primary">Halaman : <?php echo $JmlHalaman; ?> </span>
 					</div>
 					
 					<div class="col-md-6" align="right">
@@ -173,7 +168,7 @@ include('system/inc/nav-admin.php');
 								}
  
 								//Tampilkan navigasi
-								<?= $prev . $nmr . $next >?;
+								echo $prev . $nmr . $next;
 								?>
 							</ul>
 						</nav>
@@ -218,28 +213,24 @@ include('system/inc/nav-admin.php');
 							<tbody>
 								<?php
 								$batas = 5;
-								$pgk = isset(FILTER_INPUT(INPUT_GET, 'pgk')) ? FILTER_INPUT(INPUT_GET, 'pgk'):"";
+								$pgk = isset($_GET['pgk']) ? $_GET['pgk']:"";
 								if (empty($pgk)){
 								$posisi = 0;
 								$pgk = 1;
 								} else {
 								$posisi = ($pgk-1)*$batas; }
-								$this->db->from('kelas');
-								$this->db->order_by('nm_kelas', 'asc');
-								$this->db->limit('$posisi', '$batas');
-								$query->db->get();		
-								
+								$sql = mysql_query("SELECT * FROM kelas ORDER BY nm_kelas ASC limit $posisi, $batas ");
 								$no = 1+$posisi;
-								while ($data = $sql->result_array()) 
+								while ($data = mysql_fetch_assoc($sql)) 
 								{
 								?>
 								<tr>
-								<td><center><?php <?= $data['nm_kelas'] >?; ?></center></td>
+								<td><center><?php echo $data['nm_kelas']; ?></center></td>
 								<td align="center">
 									<div class="btn-group btn-group-sm" role="group" aria-label="Basic example">
-										<a href="page.php?edit-kelas&id=<?php <?= $data['id_kelas'] >?;?>" class="btn btn-default font-icon font-icon-pencil" data-toggle="tooltip" data-placement="top" title="Edit?"></a>
-										<a href="page.php?detail-kelas&id=<?php <?= $data['id_kelas'] >?;?>" class="btn btn-default font-icon font-icon-eye" data-toggle="tooltip" data-placement="top" title="Detail?"></a>
-										<a href="page.php?delete-kelas&id=<?php <?= $data['id_kelas'] >?;?>" onClick="return confirm('Yakin akan menghapus data ini?');" class="btn btn-default font-icon font-icon-trash" data-toggle="tooltip" data-placement="top" title="Hapus?"></a>
+										<a href="page.php?edit-kelas&id=<?php echo $data['id_kelas'];?>" class="btn btn-default font-icon font-icon-pencil" data-toggle="tooltip" data-placement="top" title="Edit?"></a>
+										<a href="page.php?detail-kelas&id=<?php echo $data['id_kelas'];?>" class="btn btn-default font-icon font-icon-eye" data-toggle="tooltip" data-placement="top" title="Detail?"></a>
+										<a href="page.php?delete-kelas&id=<?php echo $data['id_kelas'];?>" onClick="return confirm('Yakin akan menghapus data ini?');" class="btn btn-default font-icon font-icon-trash" data-toggle="tooltip" data-placement="top" title="Hapus?"></a>
 										<a href="page.php?tambah-kelas" class="btn btn-default font-icon font-icon-plus" data-toggle="tooltip" data-placement="top" title="Tambah?"></a>
 									</div>
 								</td>
@@ -256,15 +247,14 @@ include('system/inc/nav-admin.php');
 					<div class="col-md-6">
 						<?php
 						//hitung jumlah data
-						$this->db->count_all_results('kelas');
-						
+						$jml_data = mysql_num_rows(mysql_query("SELECT * FROM kelas"));
 						//Jumlah halaman
 						$JmlHalaman = ceil($jml_data/$batas); //ceil digunakan untuk pembulatan keatas
 						?>
 						<br>
   						<span class="label label-success">Info! </span> Total  
-						<span class="label label-primary">Kelas : <?php <?= $jml_data >?; ?> </span>
-  						<span class="label label-primary">Halaman : <?php <?= $JmlHalaman >?; ?> </span>
+						<span class="label label-primary">Kelas : <?php echo $jml_data; ?> </span>
+  						<span class="label label-primary">Halaman : <?php echo $JmlHalaman; ?> </span>
 					</div>
 					
 					<div class="col-md-6" align="right">
@@ -318,7 +308,7 @@ include('system/inc/nav-admin.php');
 								}
  
 								//Tampilkan navigasi
-								<?= $prev . $nmr . $next >?;
+								echo $prev . $nmr . $next;
 								?>
 							</ul>
 						</nav>
@@ -366,31 +356,27 @@ include('system/inc/nav-admin.php');
 							<tbody>
 								<?php								
 								$batas = 10;
-								$pgs = isset(FILTER_INPUT(INPUT_GET, 'pgs')) ? FILTER_INPUT(INPUT_GET, 'pgs'):"";
+								$pgs = isset($_GET['pgs']) ? $_GET['pgs']:"";
 								if (empty($pgs)){
 								$posisi = 0;
 								$pgs = 1;
 								} else {
 								$posisi = ($pgs-1)*$batas; }
-								$this->db->from('siswa');
-								$this->db->order_by('nis', 'asc');
-								$this->db->limit('$posisi', '$batas');
-								$query->db->get();
-								
+								$sql = mysql_query("SELECT * FROM siswa ORDER BY nis ASC limit $posisi, $batas ");
 								$no = 1+$posisi;
-								while ($data = $sql->result_array()) 
+								while ($data = mysql_fetch_assoc($sql)) 
 								{
 								?>
 								<tr>
-								<td><?php <?= $data['nama'] >?; ?></td>
-								<td class="color-blue-grey-lighter"><?php <?= $data['nis'] >?; ?></td>
-								<td align="center"><?php <?= $data['nm_kelas'] >?; ?></td>
-								<td class="color-blue-grey-lighter" align="center"><?php <?= $data['jns_kel'] >?; ?></td>
+								<td><?php echo $data['nama']; ?></td>
+								<td class="color-blue-grey-lighter"><?php echo $data['nis']; ?></td>
+								<td align="center"><?php echo $data['nm_kelas']; ?></td>
+								<td class="color-blue-grey-lighter" align="center"><?php echo $data['jns_kel']; ?></td>
 								<td align="center">
 									<div class="btn-group btn-group-sm" role="group" aria-label="Basic example">
-										<a href="page.php?edit-siswa&id=<?php <?= $data['id_siswa'] >?;?>" class="btn btn btn-default" data-toggle="tooltip" data-placement="top" title="Edit?"><i class="font-icon font-icon-pencil"></i> </a>
-										<a href="page.php?detail-siswa&id=<?php <?= $data['id_siswa'] >?;?>" class="btn btn btn-default" data-toggle="tooltip" data-placement="top" title="Detail?"><i class="font-icon font-icon-eye"></i> </a>
-										<a href="page.php?delete-siswa&id=<?php <?= $data['id_siswa'] >?;?>" onClick="return confirm('Yakin akan menghapus data ini?');" class="btn btn btn-default" data-toggle="tooltip" data-placement="top" title="Hapus?"><i class="font-icon font-icon-trash"></i> </a>
+										<a href="page.php?edit-siswa&id=<?php echo $data['id_siswa'];?>" class="btn btn btn-default" data-toggle="tooltip" data-placement="top" title="Edit?"><i class="font-icon font-icon-pencil"></i> </a>
+										<a href="page.php?detail-siswa&id=<?php echo $data['id_siswa'];?>" class="btn btn btn-default" data-toggle="tooltip" data-placement="top" title="Detail?"><i class="font-icon font-icon-eye"></i> </a>
+										<a href="page.php?delete-siswa&id=<?php echo $data['id_siswa'];?>" onClick="return confirm('Yakin akan menghapus data ini?');" class="btn btn btn-default" data-toggle="tooltip" data-placement="top" title="Hapus?"><i class="font-icon font-icon-trash"></i> </a>
 										<a href="page.php?tambah-siswa" class="btn btn-default font-icon font-icon-plus" data-toggle="tooltip" data-placement="top" title="Tambah?"></a>
 									</div>
 								</td>
@@ -407,15 +393,14 @@ include('system/inc/nav-admin.php');
 					<div class="col-md-6">
 						<?php
 						//hitung jumlah data
-						$this->db->count_all_results('siswa');
-						
+						$jml_data = mysql_num_rows(mysql_query("SELECT * FROM siswa"));
 						//Jumlah halaman
 						$JmlHalaman = ceil($jml_data/$batas); //ceil digunakan untuk pembulatan keatas
 						?>
 						<br>
   						<span class="label label-success">Info! </span> Total  
-						<span class="label label-primary">Siswa : <?php <?= $jml_data >?; ?> </span>
-  						<span class="label label-primary">Halaman : <?php <?= $JmlHalaman >?; ?> </span>
+						<span class="label label-primary">Siswa : <?php echo $jml_data; ?> </span>
+  						<span class="label label-primary">Halaman : <?php echo $JmlHalaman; ?> </span>
 					</div>
 					
 					<div class="col-md-6" align="right">
@@ -469,7 +454,7 @@ include('system/inc/nav-admin.php');
 								}
  
 								//Tampilkan navigasi
-								<?= $prev . $nmr . $next >?;
+								echo $prev . $nmr . $next;
 								?>
 							</ul>
 						</nav>

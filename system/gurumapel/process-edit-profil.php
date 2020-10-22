@@ -6,16 +6,17 @@ include('system/config/conn.php');
 $folder="system/images/"; 
 
 //tangkap data dari form
-$id_user = FILTER_INPUT(INPUT_POST, 'id_user');
-$pass = FILTER_INPUT(INPUT_POST, 'pass');
+$id_user = $_POST['id_user'];
+$pass = $_POST['pass'];
 $pass = md5($pass);
-$confirm = FILTER_INPUT(INPUT_POST, 'confirm');
+$confirm = $_POST['confirm'];
 $confirm = md5($confirm);
-$nama = FILTER_INPUT(INPUT_POST, 'nama');
-$user = FILTER_INPUT(INPUT_POST, 'user');
-$level = FILTER_INPUT(INPUT_POST, 'level');
+$nama = $_POST['nama'];
+$user = $_POST['user'];
+$level = $_POST['level'];
 
-	$query = mysql_query("update user set user='$user', pass='$pass', confirm='$confirm', level='$level', nama='$nama' where id_user='$id_user'");
+	$query = mysql_query("update user set user='$user', pass='$pass', confirm='$confirm', level='$level', nama='$nama' where id_user='$id_user'")
+		or die (mysql_error());
 	header('location:page.php?g-home&message=edit-success');  
 
 

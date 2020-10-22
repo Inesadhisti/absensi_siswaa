@@ -1,16 +1,16 @@
 <?php 
 //panggil file session-walikelas.php untuk menentukan apakah walikelas atau bukan
-include 'system/inc/session-walikelas.php';
+include('system/inc/session-walikelas.php');
 //panggil file conn.php untuk menghubung ke server
-include 'system/config/conn.php' ;
+include('system/config/conn.php');
 //panggil file header.php untuk menghubungkan konten bagian atas
-include 'system/inc/header.php' ;
+include('system/inc/header.php');
 //memberi judul halaman
-<?= '<title>walikelas Piket - MARI-ABSEN</title>' >?;
+echo '<title>walikelas Piket - MARI-ABSEN</title>';
 //panggil file css.php untuk desain atau tema
-include 'system/inc/css.php' ;
+include('system/inc/css.php');
 //panggil file navi-walikelas.php untuk menghubungkan navigasi walikelas ke konten
-include 'system/inc/nav-walikelas.php' ;
+include('system/inc/nav-walikelas.php');
 //merubah waktu kedalam format indonesia
 $hari = array ("Minggu","Senin","Selasa","Rabu","Kamis","Jumat","Sabtu");
 $bln = array ("","Januari","Februari","Maret","April","Mei","Juni","Juli","Agustus","September","Oktober","November","Desember");
@@ -24,21 +24,21 @@ $bln = array ("","Januari","Februari","Maret","April","Mei","Juni","Juli","Agust
 				<div class="col-lg-12 col-md-12">
 				<?php 
                 //kode php ini kita gunakan untuk menampilkan pesan Selamat datang user!
-				if (!empty((FILTER_INPUT(INPUT_GET, 'sign-in')) && (FILTER_INPUT(INPUT_GET, 'sign-in') == 'succes') {
-				<?= '<div class="alert alert-success alert-fill alert-close alert-dismissible fade in" role="alert"> >?
+				if (!empty($_GET['sign-in']) && $_GET['sign-in'] == 'succes') {
+				echo '<div class="alert alert-success alert-fill alert-close alert-dismissible fade in" role="alert">
 			  	<button type="button" class="close" data-dismiss="alert" aria-label="Close">
 			  	<span aria-hidden="true">&times;</span>
 			  	</button>
-			  	Assalamualaikum <strong>'.(FILTER_INPUT(INPUT_SESSION, 'nama').' ! </strong>
+			  	Assalamualaikum <strong>'.$_SESSION['nama'].' ! </strong>
 				Selamat Datang Di MARI-ABSEN </div>';
 				}
 				//kode php ini kita gunakan untuk menampilkan pesan Edit sukses
-				else if (!empty((FILTER_INPUT(INPUT_GET, 'message')) && (FILTER_INPUT(INPUT_GET, 'message') == 'edit-success') {
-				<?= '<div class="alert alert-success alert-fill alert-close alert-dismissible fade in" role="alert"> >?
+				else if (!empty($_GET['message']) && $_GET['message'] == 'edit-success') {
+				echo '<div class="alert alert-success alert-fill alert-close alert-dismissible fade in" role="alert">
 			  	<button type="button" class="close" data-dismiss="alert" aria-label="Close">
 			  	<span aria-hidden="true">&times;</span>
 			 	</button>
-			  	SUCCESS !! - Data Profil Berhasil Di Edit ! [ <a href="page.php?w-detail-profil&id='.(FILTER_INPUT(INPUT_SESSION, 'id_user').'">Lihat Perubahan Disini !</a> ]
+			  	SUCCESS !! - Data Profil Berhasil Di Edit ! [ <a href="page.php?w-detail-profil&id='.$_SESSION['id_user'].'">Lihat Perubahan Disini !</a> ]
 				</div>';
 				}
 				?>
@@ -85,25 +85,20 @@ $bln = array ("","Januari","Februari","Maret","April","Mei","Juni","Juli","Agust
 					</thead>
 					<tbody>
 						<?php 
-						$this->db->from('kelas');
-						$this->db->order_by('nm_kelas', 'asc');
-						$kelas->db->get();
-						
-						while($row=$kelas->result_array()){
+						$kelas=mysql_query("select * from kelas order by nm_kelas asc",$connect);
+						while($row=mysql_fetch_array($kelas)){
 						//mencari jumlah siswa di masing-masing kelas
-							$this->db->from('siswa');
-								$this->db->where('$row[nm_kelas]');
-								$siswa->db->get();
-						$jumlah=$siswa->result_array();
+						$siswa=mysql_query("select * from siswa where nm_kelas='$row[nm_kelas]'",$connect);
+						$jumlah=mysql_num_rows($siswa);
 						?>
 						<tr>
 						
-						<td align="center"><?php <?= $row['nm_kelas'] >?; ?></td>
-						<td align="center"><?php <?= "".$hari[date("w")].", ".date("j")." ".$bln[date("n")]." ".date("Y");"" >?; ?></td>
-						<td align="center"><?php <?= $jumlah >?;?></td>
+						<td align="center"><?php echo $row['nm_kelas']; ?></td>
+						<td align="center"><?php echo "".$hari[date("w")].", ".date("j")." ".$bln[date("n")]." ".date("Y");""; ?></td>
+						<td align="center"><?php echo $jumlah;?></td>
 						<td align="center">
 							<div class="btn-group btn-group-sm" role="group" aria-label="Basic example">
-							<a href="page.php?w-data-absensi&kelas=<?php  <?= $row['nm_kelas'] >?; ?>&tanggal=<?php <?= $tanggal=date("d/m/Y") >?; ?>" class="btn btn-default font-icon font-icon-eye" data-toggle="tooltip" data-placement="top" title="Lihat?"></a>
+							<a href="page.php?w-data-absensi&kelas=<?php  echo $row['nm_kelas']; ?>&tanggal=<?php echo $tanggal=date("d/m/Y"); ?>" class="btn btn-default font-icon font-icon-eye" data-toggle="tooltip" data-placement="top" title="Lihat?"></a>
 							</div>
 						</td>
 						</tr>
@@ -120,20 +115,15 @@ $bln = array ("","Januari","Februari","Maret","April","Mei","Juni","Juli","Agust
 						<br>
   						<span class="label label-success">Info! </span> Total
 						<?php 
-						$this->db->from('kelas');
-						$this->db->order_by('nm_kelas');
-						$query->get();
-          				$jmlh_kelas=$query->result_array();
+						$query=mysql_query("select * from kelas order by nm_kelas");
+          				$jmlh_kelas=mysql_num_rows($query);
     					?>
-  						<span class="label label-primary">Kelas : <?php <?= "$jmlh_kelas" >?;?> </span>
+  						<span class="label label-primary">Kelas : <?php echo "$jmlh_kelas";?> </span>
 						<?php 
-						
-						$this->db->from('siswa');
-						$this->db->order_by('id_siswa');
-						$query->get();
-          				$jmlh_siswa= $query->result_array();
+						$query=mysql_query("select * from siswa order by id_siswa");
+          				$jmlh_siswa=mysql_num_rows($query);
     					?>
-						<span class="label label-primary">Siswa : <?php <?= "$jmlh_siswa" >?;?> </span>
+						<span class="label label-primary">Siswa : <?php echo "$jmlh_siswa";?> </span>
 					</div>
 					
 					<div class="col-md-6" align="right">

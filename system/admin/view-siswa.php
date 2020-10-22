@@ -6,17 +6,15 @@ include('system/config/conn.php');
 //panggil file header.php untuk menghubungkan konten bagian atas
 include('system/inc/header.php');
 //memberi judul halaman
-<?= '<title>Lihat User - MARI-ABSEN</title>' >?;
+echo '<title>Lihat User - MARI-ABSEN</title>';
 //panggil file css.php untuk desain atau tema
 include('system/inc/css.php');
 //panggil file navi-admin.php untuk menghubungkan navigasi admin ke konten
 include('system/inc/nav-admin.php');
 //mendapatkan informasi untuk menlihat data
-$id_siswa = (FILTER_INPUT(INPUT_GET, 'id'));
-$this->db->from('siswa');
-$this->db->where('$id_siswa', 'asc');
-$query->db->get();
-$data = $query->result_array();
+$id_siswa = $_GET['id'];
+$query = mysql_query("SELECT * FROM siswa WHERE id_siswa='$id_siswa'") or die(mysql_error());
+$data = mysql_fetch_array($query);
 ?>
 
 	<div class="page-content">
@@ -46,49 +44,49 @@ $data = $query->result_array();
 										<tr>
 										<td align="right">Nama</td>
 										<td align="center">:</td>
-										<td align="left"><?php <?= $data['nama'] >?; ?></td>
+										<td align="left"><?php echo $data['nama']; ?></td>
 										</tr> 
 										
 										<tr>
 										<td align="right">NIS</td>
 										<td align="center">:</td>
-										<td align="left"><?php <?= $data['nis'] >?; ?></td>
+										<td align="left"><?php echo $data['nis']; ?></td>
 										</tr> 
 										
 										<tr>
 										<td align="right">Kelas</td>
 										<td align="center">:</td>
-										<td align="left"><?php <?= $data['nm_kelas'] >?; ?></td>
+										<td align="left"><?php echo $data['nm_kelas']; ?></td>
 										</tr> 
 										
 										<tr>
 										<td align="right">Jenis Kelamin</td>
 										<td align="center">:</td>
-										<td align="left"><?php <?= $data['jns_kel'] >?; ?></td>
+										<td align="left"><?php echo $data['jns_kel']; ?></td>
 										</tr> 
 										
 										<tr>
 										<td align="right">Tanggal Lahir</td>
 										<td align="center">:</td>
-										<td align="left"><?php <?= $data['tgl_lahir'] >?; ?></td>
+										<td align="left"><?php echo $data['tgl_lahir']; ?></td>
 										</tr> 
 										
 										<tr>
 										<td align="right">Tempat Lahir</td>
 										<td align="center">:</td>
-										<td align="left"><?php <?= $data['tmpt_lahir'] >?; ?></td>
+										<td align="left"><?php echo $data['tmpt_lahir']; ?></td>
 										</tr> 
 										
 										<tr>
 										<td align="right">Alamat</td>
 										<td align="center">:</td>
-										<td align="left"><?php <?= $data['alamat'] >?; ?></td>
+										<td align="left"><?php echo $data['alamat']; ?></td>
 										</tr>
 
 										<tr>
 										<td align="right">Nama Orang Tua</td>
 										<td align="center">:</td>
-										<td align="left"><?php <?= $data['nama_ortu'] >?; ?></td>
+										<td align="left"><?php echo $data['nama_ortu']; ?></td>
 										</tr> 
 									</tbody>
 								</table>
@@ -100,8 +98,8 @@ $data = $query->result_array();
 						<div class="col-md-12">
 							<div class="form-group" align="center">
 								<div class="btn-group" role="group">
-									<a href="page.php?edit-siswa&id=<?php <?= $data['id_siswa'] >?;?>" class="btn btn-default font-icon font-icon-pencil" data-toggle="tooltip" data-placement="top" title="Edit?"></a>
-									<a href="page.php?delete-siswa&id=<?php <?= $data['id_siswa'] >?;?>" onClick="return confirm('Yakin akan menghapus data ini?');" class="btn btn-default font-icon font-icon-trash" data-toggle="tooltip" data-placement="top" title="Hapus?"></a>
+									<a href="page.php?edit-siswa&id=<?php echo $data['id_siswa'];?>" class="btn btn-default font-icon font-icon-pencil" data-toggle="tooltip" data-placement="top" title="Edit?"></a>
+									<a href="page.php?delete-siswa&id=<?php echo $data['id_siswa'];?>" onClick="return confirm('Yakin akan menghapus data ini?');" class="btn btn-default font-icon font-icon-trash" data-toggle="tooltip" data-placement="top" title="Hapus?"></a>
 									<a href="javascript:history.back()" class="btn btn-default font-icon font-icon-refresh-2" data-toggle="tooltip" data-placement="top" title="Kembali?"></a>
 								</div>
 							</div>

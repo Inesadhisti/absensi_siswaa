@@ -165,7 +165,7 @@ $(document).ready(function(){
 				subMenu.slideUp();
 				subMenu.find(".opened").removeClass("opened");
 			} else {
-				if (clickLink.parents(".with-sub").size() === 1) {
+				if (clickLink.parents(".with-sub").size() == 1) {
 					$(".side-menu-list .opened").removeClass("opened").find("ul").slideUp();
 				}
 				parent.addClass("opened");
@@ -300,17 +300,17 @@ $(document).ready(function(){
 		var sectionHeaderHeight = 0;
 
 		if (sectionHeader.size()) {
-			sectionHeaderHeight = parseInt("sectionHeader.height()", sectionHeader.height()) + parseInt("sectionHeader.css("padding-bottom")", sectionHeader.css("padding-bottom"));
+			sectionHeaderHeight = parseInt(sectionHeader.height()) + parseInt(sectionHeader.css("padding-bottom"));
 		}
 
 		$(".box-typical-full-height").css("min-height",
 			$(window).height() -
-			parseInt("$(".page-content").css("padding-top")", $(".page-content").css("padding-top")) -
-			parseInt("$(".page-content").css("padding-bottom")", $(".page-content").css("padding-bottom")) -
+			parseInt($(".page-content").css("padding-top")) -
+			parseInt($(".page-content").css("padding-bottom")) -
 			sectionHeaderHeight -
-			parseInt("$(".box-typical-full-height").css("margin-bottom")", $(".box-typical-full-height").css("margin-bottom")) - 2
-			);
-		$(".box-typical-full-height>.tbl, .box-typical-full-height>.box-typical-center").height(parseInt("$(".box-typical-full-height").css("min-height")", $(".box-typical-full-height").css("margin-bottom")));
+			parseInt($(".box-typical-full-height").css("margin-bottom")) - 2
+		);
+		$(".box-typical-full-height>.tbl, .box-typical-full-height>.box-typical-center").height(parseInt($(".box-typical-full-height").css("min-height")));
 	}
 
 	boxFullHeight();
@@ -326,21 +326,21 @@ $(document).ready(function(){
 	function chatHeights() {
 		$(".chat-dialog-area").height(
 			$(window).height() -
-			parseInt("$(".page-content").css("padding-top")", $(".page-content").css("padding-top")) -
-			parseInt("$(".page-content").css("padding-bottom")", $(".page-content").css("padding-bottom")) -
-			parseInt("$(".chat-container").css("margin-bottom")", $(".chat-container").css("margin-bottom")) - 2 -
+			parseInt($(".page-content").css("padding-top")) -
+			parseInt($(".page-content").css("padding-bottom")) -
+			parseInt($(".chat-container").css("margin-bottom")) - 2 -
 			$(".chat-area-header").outerHeight() -
 			$(".chat-area-bottom").outerHeight()
 		);
 		$(".chat-list-in")
 			.height(
 				$(window).height() -
-				parseInt("$(".page-content").css("padding-top")", $(".page-content").css("padding-top")) -
-				parseInt("$(".page-content").css("padding-bottom")", $(".page-content").css("padding-bottom")) -
-				parseInt("$(".chat-container").css("margin-bottom")", $(".chat-container").css("margin-bottom")) - 2 -
+				parseInt($(".page-content").css("padding-top")) -
+				parseInt($(".page-content").css("padding-bottom")) -
+				parseInt($(".chat-container").css("margin-bottom")) - 2 -
 				$(".chat-area-header").outerHeight()
 			)
-			.css("min-height", parseInt("$(".chat-dialog-area").css("min-height")", $(".chat-dialog-area").css("min-height"))) + $(".chat-area-bottom").outerHeight());
+			.css("min-height", parseInt($(".chat-dialog-area").css("min-height")) + $(".chat-area-bottom").outerHeight());
 	}
 
 	chatHeights();
@@ -387,9 +387,9 @@ $(document).ready(function(){
 				boxCont = box.find(".files-manager-content-in"),
 				boxColRight = box.find(".files-manager-aside");
 
-			var paddings = parseInt("$(".page-content").css("padding-top")", $(".page-content").css("padding-top")) +
-							parseInt("$(".page-content").css("padding-bottom")", $(".page-content").css("padding-bottom")) +
-							parseInt("$(".box").css("margin-bottom")", $(".box").css("margin-bottom"))) + 2;
+			var paddings = parseInt($(".page-content").css("padding-top")) +
+							parseInt($(".page-content").css("padding-bottom")) +
+							parseInt(box.css("margin-bottom")) + 2;
 
 			boxColLeft.height("auto");
 			boxCont.height("auto");
@@ -435,17 +435,17 @@ $(document).ready(function(){
 
 			boxColLeft.height(
 				$(window).height() -
-				parseInt("$(".page-content").css("padding-top")", $(".page-content").css("padding-top")) -
-				parseInt("$(".page-content").css("padding-bottom")", $(".page-content").css("padding-bottom")) -
-				parseInt("$(".box").css("margin-bottom")", $(".box").css("margin-bottom"))) - 2 -
+				parseInt($(".page-content").css("padding-top")) -
+				parseInt($(".page-content").css("padding-bottom")) -
+				parseInt(box.css("margin-bottom")) - 2 -
 				boxHeader.outerHeight()
 			);
 
 			boxColRight.height(
 				$(window).height() -
-				parseInt("$(".page-content").css("padding-top")", $(".page-content").css("padding-top")) -
-				parseInt("$(".page-content").css("padding-bottom")", $(".page-content").css("padding-bottom")) -
-				parseInt("$(".box").css("margin-bottom")", $(".box").css("margin-bottom"))) - 2 -
+				parseInt($(".page-content").css("padding-top")) -
+				parseInt($(".page-content").css("padding-bottom")) -
+				parseInt(box.css("margin-bottom")) - 2 -
 				boxHeader.outerHeight() -
 				boxSubHeader.outerHeight()
 			);

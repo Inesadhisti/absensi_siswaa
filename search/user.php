@@ -6,7 +6,7 @@ include('../system/config/conn.php');
 //panggil file header.php untuk menghubungkan konten bagian atas
 include('inc/header.php');
 //memberi judul halaman
-	<?= '<title>Pencarian Data User - MARI-ABSEN</title>' >?;
+	echo '<title>Pencarian Data User - MARI-ABSEN</title>';
 //panggil file css.php untuk desain atau tema
 include('inc/css.php');
 //panggil file navi-admin.php untuk menghubungkan navigasi admin ke konten
@@ -55,29 +55,24 @@ include('inc/nav-admin.php');
 							<tbody>
 								<?php
 								//membentuk klausa where pencarian 
-								if(isset(FILTER_INPUT(INPUT_GET, 'q')? && FILTER_INPUT(INPUT_GET, 'q')){
-								(FILTER_INPUT(INPUT_GET, 'q');
-								$this->db->from('user');
-								$this->db->like('nama', '%$q%');
-								$this->db->limit(10);
-								$sql= $this->db->get();
-								$result = sql-> result_array();
-								 
-								if($result->result_array() > 0) {
-								while($data = $resutl->result_array())
+								if(isset($_GET['q']) && $_GET['q']){
+								$q = $_GET['q']; 
+								$sql = "SELECT * FROM user WHERE nama like '%$q%' limit 10";
+								$result = mysql_query($sql);
+								if(mysql_num_rows($result) > 0){
+								while($data = mysql_fetch_array($result))
 								{
  								?>
-								
 								<tr>
-								<td><?php <?= $data['nama'] >?; ?></td>
-								<td class="color-blue-grey-lighter" align="center"><?php <?= $data['level'] >?; ?></td>
-								<td align="center"><?php <?= $data['user'] >?; ?></td>
+								<td><?php echo $data['nama']; ?></td>
+								<td class="color-blue-grey-lighter" align="center"><?php echo $data['level']; ?></td>
+								<td align="center"><?php echo $data['user']; ?></td>
 								<td class="color-blue-grey-lighter" align="center">******</td>
 								<td align="center">
 									<div class="btn-group btn-group-sm" role="group" aria-label="Basic example">
-										<a href="../page.php?edit-user&id=<?php <?= $data['id_user'] >?;?>" class="btn btn btn-default" data-toggle="tooltip" data-placement="top" title="Edit?"><i class="font-icon font-icon-pencil"></i> </a>
-										<a href="../page.php?detail-user&id=<?php <?= $data['id_user'] >?;?>" class="btn btn btn-default" data-toggle="tooltip" data-placement="top" title="Detail?"><i class="font-icon font-icon-eye"></i> </a>
-										<a href="../page.php?delete-user&id=<?php <?= $data['id_user'] >?;?>" onClick="return confirm('Yakin akan menghapus data ini?');" class="btn btn btn-default" data-toggle="tooltip" data-placement="top" title="Hapus?"><i class="font-icon font-icon-trash"></i> </a>
+										<a href="../page.php?edit-user&id=<?php echo $data['id_user'];?>" class="btn btn btn-default" data-toggle="tooltip" data-placement="top" title="Edit?"><i class="font-icon font-icon-pencil"></i> </a>
+										<a href="../page.php?detail-user&id=<?php echo $data['id_user'];?>" class="btn btn btn-default" data-toggle="tooltip" data-placement="top" title="Detail?"><i class="font-icon font-icon-eye"></i> </a>
+										<a href="../page.php?delete-user&id=<?php echo $data['id_user'];?>" onClick="return confirm('Yakin akan menghapus data ini?');" class="btn btn btn-default" data-toggle="tooltip" data-placement="top" title="Hapus?"><i class="font-icon font-icon-trash"></i> </a>
 										<a href="../page.php?tambah-user" class="btn btn-default font-icon font-icon-plus" data-toggle="tooltip" data-placement="top" title="Tambah?"></a>
 									</div>
 								</td>
@@ -87,7 +82,7 @@ include('inc/nav-admin.php');
 								?>
 							</tbody>
 							<?php }else{ 
-							<?= '<tr><td  colspan="7" align="center">Nama User tidak ditemukan!</td></tr>' >?; } 
+							echo '<tr><td  colspan="7" align="center">Nama User tidak ditemukan!</td></tr>'; } 
 							} 
 							?>
 						</table>
@@ -98,7 +93,7 @@ include('inc/nav-admin.php');
 					<div class="col-md-6">
 						<br>
   						<span class="label label-success">Info! </span> Hasil  Pencarian
-  						<span class="label label-primary">Untuk : <?php <?= $q >?; ?> </span>
+  						<span class="label label-primary">Untuk : <?php echo $q; ?> </span>
 					</div>
 					
 					<div class="col-md-6" align="right">

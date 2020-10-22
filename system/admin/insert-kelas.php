@@ -6,7 +6,7 @@ include('system/config/conn.php');
 //panggil file header.php untuk menghubungkan konten bagian atas
 include('system/inc/header.php');
 //memberi judul halaman
-<?= '<title>Tamabah Kelas - MARI-ABSEN</title>' ?>;
+echo '<title>Tamabah Kelas - MARI-ABSEN</title>';
 //panggil file css.php untuk desain atau tema
 include('system/inc/css.php');
 //panggil file navi-admin.php untuk menghubungkan navigasi admin ke konten
@@ -49,5 +49,5 @@ include('system/inc/nav-admin.php');
 
 <?php 
 //panggil file footer.php untuk menghubungkan konten bagian bawah
-include ('system/inc/footer.php');
+include('system/inc/footer.php');
 ?>

@@ -6,18 +6,15 @@ include('../../system/config/conn.php');
 //panggil file header.php untuk menghubungkan konten bagian atas
 include('../../system/inc/header.php');
 //memberi judul halaman
-<?= '<title>Absen Siswa - MARI-ABSEN</title>' >?;
+echo '<title>Absen Siswa - MARI-ABSEN</title>';
 //panggil file css.php untuk desain atau tema
 include('../../system/inc/css.php');
 //panggil file navi-admin.php untuk menghubungkan navigasi admin ke konten
 include('../../system/inc/nav-admin.php');
 //mendapatkan informasi untuk mengabsen siswa
-FILTER_INPUT(INPUT_GET, 'kelas');
-$this->db->from('kelas');
-$this->db->where('nm_kelas');
-$this->db->order_by('nm_kelas', 'asc');
-$query = this->db->get();
-$data = $query->result_array();
+$nm_kelas = $_GET['kelas'];
+$query = mysql_query("SELECT * FROM kelas WHERE nm_kelas='$nm_kelas' ORDER BY nm_kelas ASC") or die(mysql_error());
+$data = mysql_fetch_array($query);
 //merubah waktu kedalam format indonesia
 $hari = array ("Minggu","Senin","Selasa","Rabu","Kamis","Jumat","Sabtu");
 $bln = array ("","Januari","Februari","Maret","April","Mei","Juni","Juli","Agustus","September","Oktober","November","Desember");
@@ -30,8 +27,8 @@ $bln = array ("","Januari","Februari","Maret","April","Mei","Juni","Juli","Agust
 					<div class="tbl-row">
 						<div class="tbl-cell tbl-cell-title">
 							<div align="center">
-								<h3 align="center"> ABSEN SISWA KELAS : <?php <?= $nm_kelas >?; ?></h3>
-								<h7 align="center">( <?php <?= "".$hari[date("w")].", ".date("j")." ".$bln[date("n")]." ".date("Y");"" >?; ?> )</h7>
+								<h3 align="center"> ABSEN SISWA KELAS : <?php echo $nm_kelas; ?></h3>
+								<h7 align="center">( <?php echo "".$hari[date("w")].", ".date("j")." ".$bln[date("n")]." ".date("Y");""; ?> )</h7>
 							</div>
 						</div>
 					</div>
@@ -54,30 +51,27 @@ $bln = array ("","Januari","Februari","Maret","April","Mei","Juni","Juli","Agust
 									<?php
 									//penting nech buat kasih nilai awal cekbox
 									$no=0;
-									$this->db->from('kelas');
-									$this->db->where('nm_kelas');
-									$this->db->order_by('nm_kelas', 'asc');
-									$query->db->get();
-									while($data= $query->result_array()){
+									$query=mysql_query("SELECT * FROM siswa WHERE nm_kelas='$nm_kelas' ORDER BY nis ASC");
+									while($data=mysql_fetch_array($query)){
 									?>
 									<tr>	
-									<input type="hidden" value="<?php <?= $data['nm_kelas'] >?;?>" name="nm_kelas"/>
-									<input type="hidden" value="<?php <?= $tanggal=date("d/m/Y") >?; ?>" name="tanggal"/>
-									<td><?php <?= $data['nama'] >?;?></td>
+									<input type="hidden" value="<?php echo $data['nm_kelas'];?>" name="nm_kelas"/>
+									<input type="hidden" value="<?php echo $tanggal=date("d/m/Y"); ?>" name="tanggal"/>
+									<td><?php echo $data['nama'];?></td>
 									<td class="checkbox" align="center">
 									<?php
-									<?= " <input type='checkbox' name='hadir[]' value='$data[nis]' id='$no'><label for='$no'>Hadir  </label>" >?;
+									echo " <input type='checkbox' name='hadir[]' value='$data[nis]' id='$no'><label for='$no'>Hadir  </label>";
 									$no++;
-									<?= " <input type='checkbox' name='sakit[]' value='$data[nis]' id='$no'><label for='$no'>Sakit  </label>" >?;
+									echo " <input type='checkbox' name='sakit[]' value='$data[nis]' id='$no'><label for='$no'>Sakit  </label>";
 									$no++;
-									<?= " <input type='checkbox' name='ijin[]' value='$data[nis]' id='$no'><label for='$no'>Ijin  </label>" >?;
+									echo " <input type='checkbox' name='ijin[]' value='$data[nis]' id='$no'><label for='$no'>Ijin  </label>";
 									$no++;
-									<?= " <input type='checkbox' name='alfa[]' value='$data[nis]' id='$no'><label for='$no'>Alfa  </label>" >?;
+									echo " <input type='checkbox' name='alfa[]' value='$data[nis]' id='$no'><label for='$no'>Alfa  </label>";
 									$no++;
 									?>
 									</td>
-									<td><?php <?= $data['nis'] >?;?></td>
-									<td align="center"><?php <?= $data['nm_kelas'] >?;?></td>
+									<td><?php echo $data['nis'];?></td>
+									<td align="center"><?php echo $data['nm_kelas'];?></td>
 
 									</tr>
 									<?php
