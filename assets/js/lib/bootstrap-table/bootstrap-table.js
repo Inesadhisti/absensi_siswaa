@@ -33,7 +33,7 @@
     var getPropertyFromOther = function (list, from, to, value) {
         var result = '';
         $.each(list, function (i, item) {
-            if (item[from] === value) {
+            if (parseInt("from", from) === value) {
                 result = item[to];
                 return false;
             }
