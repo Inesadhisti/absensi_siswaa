@@ -38,7 +38,7 @@ include'system/admin/data-all-siswa.php';
 if(isset($_GET['data-kelas'])){ 
 include'system/admin/data-kelas.php';
 }
-if(isset($_GET['data-siswa'])){ 
+if(isset(FILTER_INPUT(INPUT_GET,'data-siswa')){ 
 include'system/admin/data-siswa.php';
 }
 if(isset($_GET['data-user'])){ 
