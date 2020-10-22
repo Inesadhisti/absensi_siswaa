@@ -12,7 +12,7 @@ $pass = md5($pass);
 $confirm = $_POST['confirm'];
 $confirm = md5($confirm);
 $nama = $_POST['nama'];
-$user = $_POST['user'];
+$user = FILTER_INPUT(INPUT_POST, 'user';
 $level = $_POST['level'];
 
 //jika gambar kosong atau tidak di ganti 
