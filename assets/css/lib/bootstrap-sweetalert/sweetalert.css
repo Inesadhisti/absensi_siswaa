@@ -14,7 +14,7 @@
   }
 }
 
-@keyframes hideSweetAlert {
+@keyframes hideSweetAlert {   
   0% {
     transform: scale(1);
   }
