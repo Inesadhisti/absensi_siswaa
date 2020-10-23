@@ -189,7 +189,7 @@
 }
 @keyframes pulseWarning {
   0% {
-    border-color: #F8D486;
+    border-color: #f8d486;
   }
   100% {
     border-color: #F8BB86;
