@@ -19,7 +19,7 @@
       if (!jQuery) {
           try {
               jQuery = require('jquery');
-              if (!jQuery.fn) jQuery.fn = {}; { //isomorphic issue
+              if {(!jQuery.fn) jQuery.fn = {};  //isomorphic issue
           } catch (err) {
               if (!jQuery) throw new Error('jQuery dependency not found');
           }
